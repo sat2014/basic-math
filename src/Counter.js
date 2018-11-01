@@ -4,16 +4,27 @@ import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import Select from '@material-ui/core/Select';
-import FormLabel from '@material-ui/core/FormLabel';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Slider from '@material-ui/lab/Slider';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import Notifier, { openSnackbar } from './Notifier';
+import Snackbar from '@material-ui/core/Snackbar';
+import green from '@material-ui/core/colors/green';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: [
+      "Roboto",
+      "-apple-system",
+      "BlinkMacSystemFont",
+      "Segoe UI",
+      "Arial",
+      "sans-serif"
+    ].join(","),
+    useNextVariants: true
+  }
+  });
 
 const styles = theme => ({
   root: {
@@ -33,6 +44,9 @@ const styles = theme => ({
   slider: {
     padding: '22px 0px',
   },
+  success: {
+    backgroundColor: green[600],
+  },
 });
 
 function Counter() {
@@ -45,6 +59,15 @@ function Counter() {
   let [secondNumber, setSecondNumber] = useState(Math.floor(Math.random() * (maximumNumber - minimumNumber + 1)) + 0)
   let [total, setTotal] = useState('')
 
+  let [displayMessage, setDisplayMessage] = useState('Welcome')
+  let [snackbarOpen, setSnackbarOpen] = useState(true)
+
+    let message = (
+      <span
+        id="snackbar-message-id"
+        dangerouslySetInnerHTML={{ __html: displayMessage }}
+      />
+    );
 
   useDocumentTitle('Baic Math')
 
@@ -54,75 +77,55 @@ function Counter() {
 
   let handleChangeTotal = prop => event => {
     setTotal(event.target.value)
-    // switch(mathOperator) {
-    //   case '+':
-    //       if (parseInt(event.target.value) === parseInt((firstNumber + secondNumber))) {
-    //         console.log('Total (Addition) is correct!')
-    //         setFirstNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
-    //         setSecondNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
-    //         setTotal('')
-    //         setQuestionCount(++questionCount)
-    //       }
-    //       else console.log('Total (Addition) is not correct')
-    //       break;
-    //   case '-':
-    //       if (parseInt(event.target.value) === parseInt((firstNumber - secondNumber))) {
-    //         console.log('Total (Subtraction) is correct!')
-    //         setFirstNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
-    //         setSecondNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
-    //         setTotal('')
-    //         setQuestionCount(++questionCount)
-    //       }
-    //       else console.log('Total (Subtraction) is not correct')
-    //     break;
-    //   case '*':
-    //     if (parseInt(event.target.value) === parseInt((firstNumber * secondNumber))) {
-    //       console.log('Total (Multiplication) is correct!')
-    //       setFirstNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
-    //       setSecondNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
-    //       setTotal('')
-    //       setQuestionCount(++questionCount)
-    //     }
-    //     else console.log('Total (Multiplication) is not correct')
-    //     break;
-    //   default:
-    //       console.log('default case...')
-    // }
   }
 
   let handleSubmit = (event) => {
-    console.log('Button pressed')
+    //console.log('Button pressed')
     switch(mathOperator) {
       case '+':
           if (parseInt(total) === parseInt((firstNumber + secondNumber))) {
-            console.log('Total (Addition) is correct!!!')
-            // openSnackbar({ message: 'Correct answer!' });
+            //console.log('Total (Addition) is correct!!!')
+            setDisplayMessage('Correct!')
+            setSnackbarOpen(true)
             setFirstNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
             setSecondNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
             setTotal('')
             setQuestionCount(++questionCount)
           }
-          else console.log('Total (Addition) is not correct')
+          else {
+            setDisplayMessage('Oops, try again!')
+            setSnackbarOpen(true)
+          }
           break;
       case '-':
           if (parseInt(total) === parseInt((firstNumber - secondNumber))) {
-            console.log('Total (Subtraction) is correct!')
+            //console.log('Total (Subtraction) is correct!')
+            setDisplayMessage('Correct!')
+            setSnackbarOpen(true)
             setFirstNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
             setSecondNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
             setTotal('')
             setQuestionCount(++questionCount)
           }
-          else console.log('Total (Subtraction) is not correct')
+          else {
+            setDisplayMessage('Oops, try again!')
+            setSnackbarOpen(true)
+          }
         break;
       case '*':
         if (parseInt(total) === parseInt((firstNumber * secondNumber))) {
-          console.log('Total (Multiplication) is correct!')
+          //console.log('Total (Multiplication) is correct!')
+          setDisplayMessage('Correct!')
+          setSnackbarOpen(true)
           setFirstNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
           setSecondNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
           setTotal('')
           setQuestionCount(++questionCount)
         }
-        else console.log('Total (Multiplication) is not correct')
+        else {
+          setDisplayMessage('Oops, try again!')
+          setSnackbarOpen(true)
+        }
         break;
       default:
           console.log('default case...')
@@ -156,7 +159,9 @@ function Counter() {
         setFirstNumber(Math.floor(Math.random() * (9999 - 1000 + 1)) + 0)
         setSecondNumber(Math.floor(Math.random() * (9999 - 1000 + 1)) + 0)
       break
-      
+      default:
+        console.log('default case')
+        break
     }
   }
 
@@ -164,7 +169,21 @@ function Counter() {
     setMathOperator(event.target.value)
   }
 
-  return (<div className={styles.root}>
+  
+
+  return (<MuiThemeProvider theme={theme}>
+  <div className={styles.root}>
+  <br />
+  <br />
+  <br />
+  <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        className={styles.margin}
+        message={message}
+        autoHideDuration={2000}
+        onClose={() => setSnackbarOpen(false)}
+        open={snackbarOpen}
+      />
     <center>
       <FormControl required className={styles.formControl}>
       <InputLabel htmlFor="operator-native-simple">Operator</InputLabel>
@@ -178,9 +197,9 @@ function Counter() {
               id: 'mathOperator-native-required',
             }}
           >
-            <option value="+">addition (+)</option>
-            <option value="-">subtraction (-)</option>
-            <option value="*">multiplication (*)</option>
+            <option value="+">Add (+)</option>
+            <option value="-">Subtract (-)</option>
+            <option value="*">Multiply (*)</option>
           </Select>
       </FormControl>
   
@@ -208,15 +227,17 @@ function Counter() {
       <br />
       <br />
       <hr />
-
-      <label>{firstNumber}</label>
-      <br />
-
-      <label>{mathOperator}</label>
-       
-      <br />
-
-      <label >{secondNumber}</label>
+      <Paper className={styles.root} elevation={1}>
+        <Typography variant="h5" component="h3">
+          {firstNumber}
+        </Typography>
+        <Typography variant="h5" component="h3">
+          {mathOperator}
+        </Typography>
+        <Typography variant="h5" component="h3">
+          {secondNumber}
+        </Typography>
+      </Paper>
       <hr />
       <TextField
           id="total-addition"
@@ -225,8 +246,7 @@ function Counter() {
           type="number"
           label=""          
           value={total}
-           onChange={handleChangeTotal()}
-        
+           onChange={handleChangeTotal()}        
           InputProps={{
             startAdornment: <InputAdornment position="start">=</InputAdornment>,
           }}
@@ -240,7 +260,8 @@ function Counter() {
         Submit
       </Button >
     </center>
-  </div>)
+  </div>
+  </MuiThemeProvider>)
 }
 
 export default Counter
@@ -251,15 +272,15 @@ function useDocumentTitle(title) {
   });
 }
 
-function useFormInput(initialValue) {
-  let [value, setValue] = useState(initialValue)
+// function useFormInput(initialValue) {
+//   let [value, setValue] = useState(initialValue)
 
-  function handleChange(e) {
-    setValue(e.target.value)
-  }
+//   function handleChange(e) {
+//     setValue(e.target.value)
+//   }
 
-  return {
-    value,
-    onChange: handleChange
-  }
-}
+//   return {
+//     value,
+//     onChange: handleChange
+//   }
+// }
