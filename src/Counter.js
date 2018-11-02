@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useReducer } from 'react'
 import classNames from 'classnames'
 import TextField from '@material-ui/core/TextField'
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -7,60 +7,33 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
 import Snackbar from '@material-ui/core/Snackbar';
-import green from '@material-ui/core/colors/green';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
+import useDocumentTitle from './useDocumentTitle';
+import styles from './styles';
+import theme from './theme'
+import reducer from './reducers/reducerCount';
+import initialState from './reducers/initialState/initialStateCount';
 
-const theme = createMuiTheme({
-  typography: {
-    fontFamily: [
-      "Roboto",
-      "-apple-system",
-      "BlinkMacSystemFont",
-      "Segoe UI",
-      "Arial",
-      "sans-serif"
-    ].join(","),
-    useNextVariants: true
-  }
-  });
 
-const styles = theme => ({
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  margin: {
-    margin: theme.spacing.unit,
-  },
-  textField: {
-    flexBasis: 200,
-  },
-  formControl: {
-    margin: theme.spacing.unit,
-    minWidth: 120,
-  },
-  slider: {
-    padding: '22px 0px',
-  },
-  success: {
-    backgroundColor: green[600],
-  },
-});
+
 
 function Counter() {
   let [mathOperator, setMathOperator] = useState('+')
   let [numberOfDigits, setNumberOfDigits] = useState(1)
   let [minimumNumber, setMinimumNumber] = useState(0)
   let [maximumNumber, setMaximumNumber] = useState(9)  
-  let [questionCount, setQuestionCount] = useState(1)
+  // let [questionCount, setQuestionCount] = useState(1)
   let [firstNumber, setFirstNumber] = useState(Math.floor(Math.random() * (maximumNumber - minimumNumber + 1)) + 0)
   let [secondNumber, setSecondNumber] = useState(Math.floor(Math.random() * (maximumNumber - minimumNumber + 1)) + 0)
   let [total, setTotal] = useState('')
 
   let [displayMessage, setDisplayMessage] = useState('Welcome')
   let [snackbarOpen, setSnackbarOpen] = useState(true)
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+  
 
     let message = (
       <span
@@ -69,7 +42,7 @@ function Counter() {
       />
     );
 
-  useDocumentTitle('Baic Math')
+  useDocumentTitle(`Baic Math: ${mathOperator} ${state.questionCount}`)
 
   // useEffect(() => {
   //   document.title = `Baic Math: Question ${questionCount}`;
@@ -90,7 +63,10 @@ function Counter() {
             setFirstNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
             setSecondNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
             setTotal('')
-            setQuestionCount(++questionCount)
+            dispatch({ type: 'incrementQuestionCount' })
+            dispatch({ type: 'incrementQuestionCountAddition' })
+            // setQuestionCount(++questionCount)
+           // useDocumentTitle(`Baic Math: ${mathOperator}`)
           }
           else {
             setDisplayMessage('Oops, try again!')
@@ -105,7 +81,10 @@ function Counter() {
             setFirstNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
             setSecondNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
             setTotal('')
-            setQuestionCount(++questionCount)
+            dispatch({ type: 'incrementQuestionCount' })
+            dispatch({ type: 'incrementQuestionCountSubtraction' })
+            // setQuestionCount(++questionCount)
+           // useDocumentTitle(`Baic Math: ${mathOperator}`)
           }
           else {
             setDisplayMessage('Oops, try again!')
@@ -120,7 +99,10 @@ function Counter() {
           setFirstNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
           setSecondNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
           setTotal('')
-          setQuestionCount(++questionCount)
+          dispatch({ type: 'incrementQuestionCount' })
+          dispatch({ type: 'incrementQuestionCountMultiplication' })
+          // setQuestionCount(++questionCount)
+         // useDocumentTitle(`Baic Math: ${mathOperator}`)
         }
         else {
           setDisplayMessage('Oops, try again!')
@@ -165,9 +147,9 @@ function Counter() {
     }
   }
 
-  let handleChangeMathOperator = prop => event => {
-    setMathOperator(event.target.value)
-  }
+  // let handleChangeMathOperator = prop => event => {
+  //   setMathOperator(event.target.value)
+  // }
 
   
 
@@ -178,19 +160,19 @@ function Counter() {
   <br />
   <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        className={styles.margin}
+        className={JSON.stringify(styles.margin)}
         message={message}
         autoHideDuration={2000}
         onClose={() => setSnackbarOpen(false)}
         open={snackbarOpen}
       />
     <center>
-      <FormControl required className={styles.formControl}>
+      <FormControl required className={JSON.stringify(styles.formControl)}>
       <InputLabel htmlFor="operator-native-simple">Operator</InputLabel>
           <Select
             native
             value={mathOperator}
-            onChange={handleChangeMathOperator()}
+            onChange={(e)=>setMathOperator(e.target.value)}
             name="mathOperator"
             inputProps={{
               name: 'mathOperator',
@@ -204,7 +186,7 @@ function Counter() {
       </FormControl>
   
       
-      <FormControl required className={styles.formControl}>
+      <FormControl required className={JSON.stringify(styles.formControl)}>
       <InputLabel htmlFor="digits-native-simple">Digits</InputLabel>
           <Select
             native
@@ -226,18 +208,19 @@ function Counter() {
       <br />
       <br />
       <hr />
-      <Paper className={styles.root} elevation={1}>
-        <Typography variant="h5" component="h3">
+      <Paper className={JSON.stringify(styles.root)} elevation={1}>
+        <Typography variant="h4" component="h3">
           {firstNumber}
         </Typography>
-        <Typography variant="h5" component="h3">
+        <Typography variant="h4" component="h3">
           {mathOperator}
         </Typography>
-        <Typography variant="h5" component="h3">
+        <Typography variant="h4" component="h3">
           {secondNumber}
         </Typography>
       </Paper>
-      <hr />
+        <hr />
+        
       <TextField
           id="total-addition"
           className={classNames(styles.margin, styles.textField)}
@@ -245,11 +228,13 @@ function Counter() {
           type="number"
           label=""          
           value={total}
-           onChange={handleChangeTotal()}        
+          onChange={handleChangeTotal()}   
+          autoFocus={true}
           InputProps={{
             startAdornment: <InputAdornment position="start">=</InputAdornment>,
           }}
       />
+
       <p />
       <Button
         variant="contained"
@@ -258,6 +243,26 @@ function Counter() {
       >
         Submit
       </Button >
+      <hr />
+      <Paper className={JSON.stringify(styles.root)} elevation={1}>
+        <Typography variant="h6" component="h3">
+         Summary:
+        </Typography>
+        <hr />
+        <Typography variant="h6" component="h3">
+          Addition: {state.questionCountAddition}
+        </Typography>
+        <Typography variant="h6" component="h3">
+          Subtraction: {state.questionCountSubtraction}
+        </Typography>
+        <Typography variant="h6" component="h3">
+          Multiplication: {state.questionCountMultiplication}
+        </Typography>
+        <Typography variant="h6" component="h3">
+          Total:{state.questionCount}
+        </Typography>  
+      </Paper>
+        <hr />
     </center>
   </div>
   </MuiThemeProvider>)
@@ -265,11 +270,55 @@ function Counter() {
 
 export default Counter
 
-function useDocumentTitle(title) {
-  useEffect(() => {
-    document.title = title;
-  });
-}
+// const initialState = {
+//   questionCount: 0,
+//   questionCountAddition: 0,
+//   questionCountSubtraction: 0,
+//   questionCountMultiplication: 0
+// };
+
+// function reducer(state, action) {
+//   switch (action.type) {
+//     case 'reset':
+//       return initialState;
+//     case 'incrementQuestionCount':
+//       return {
+//         questionCount: state.questionCount + 1,
+//         questionCountAddition: state.questionCountAddition,
+//         questionCountSubtraction: state.questionCountSubtraction,
+//         questionCountMultiplication: state.questionCountMultiplication
+//       };
+//     case 'incrementQuestionCountAddition':
+//       return {
+//         questionCount: state.questionCount,
+//         questionCountAddition: state.questionCountAddition + 1,
+//         questionCountSubtraction: state.questionCountSubtraction,
+//         questionCountMultiplication: state.questionCountMultiplication
+//       };
+//     case 'incrementQuestionCountSubtraction':
+//       return {
+//         questionCount: state.questionCount,
+//         questionCountAddition: state.questionCountAddition,       
+//         questionCountSubtraction: state.questionCountSubtraction + 1,
+//         questionCountMultiplication: state.questionCountMultiplication
+//       };
+//     case 'incrementQuestionCountMultiplication':
+//       return {
+//         questionCount: state.questionCount,
+//         questionCountAddition: state.questionCountAddition,       
+//         questionCountSubtraction: state.questionCountSubtraction,
+//         questionCountMultiplication: state.questionCountMultiplication + 1
+//       };
+//     default:
+//       console.log('default from reduer!')
+//   }
+// }
+
+// function useDocumentTitle(title) {
+//   useEffect(() => {
+//     document.title = title;
+//   });
+// }
 
 // function useFormInput(initialValue) {
 //   let [value, setValue] = useState(initialValue)
