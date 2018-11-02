@@ -15,7 +15,7 @@ import styles from './styles';
 import theme from './theme'
 import reducer from './reducers/reducerCount';
 import initialState from './reducers/initialState/initialStateCount';
-
+import SimpleAppBar from './SimpleAppBar'
 
 
 
@@ -154,6 +154,7 @@ function Counter() {
   
 
   return (<MuiThemeProvider theme={theme}>
+  <SimpleAppBar />
   <div className={styles.root}>
   <br />
   <br />
