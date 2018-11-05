@@ -16,8 +16,7 @@ import theme from './theme'
 import reducer from './reducers/reducerCount';
 import initialState from './reducers/initialState/initialStateCount';
 import SimpleAppBar from './SimpleAppBar'
-
-
+import Fade from '@material-ui/core/Fade';
 
 function Counter() {
   let [mathOperator, setMathOperator] = useState('+')
@@ -34,8 +33,7 @@ function Counter() {
 
   const [state, dispatch] = useReducer(reducer, initialState);
   
-
-    let message = (
+  let message = (
       <span
         id="snackbar-message-id"
         dangerouslySetInnerHTML={{ __html: displayMessage }}
@@ -53,11 +51,9 @@ function Counter() {
   }
 
   let handleSubmit = (event) => {
-    //console.log('Button pressed')
     switch(mathOperator) {
       case '+':
           if (parseInt(total) === parseInt((firstNumber + secondNumber))) {
-            //console.log('Total (Addition) is correct!!!')
             setDisplayMessage('Correct!')
             setSnackbarOpen(true)
             setFirstNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
@@ -75,7 +71,6 @@ function Counter() {
           break;
       case '-':
           if (parseInt(total) === parseInt((firstNumber - secondNumber))) {
-            //console.log('Total (Subtraction) is correct!')
             setDisplayMessage('Correct!')
             setSnackbarOpen(true)
             setFirstNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
@@ -93,7 +88,6 @@ function Counter() {
         break;
       case '*':
         if (parseInt(total) === parseInt((firstNumber * secondNumber))) {
-          //console.log('Total (Multiplication) is correct!')
           setDisplayMessage('Correct!')
           setSnackbarOpen(true)
           setFirstNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
@@ -160,12 +154,13 @@ function Counter() {
   <br />
   <br />
   <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         className={JSON.stringify(styles.margin)}
         message={message}
         autoHideDuration={2000}
         onClose={() => setSnackbarOpen(false)}
         open={snackbarOpen}
+        TransitionComponent={Fade}
       />
     <center>
       <FormControl required className={JSON.stringify(styles.formControl)}>

@@ -6,32 +6,28 @@ function reducerCount(state, action) {
         return initialStateCount;
       case 'incrementQuestionCount':
         return {
+          ...state,
           questionCount: state.questionCount + 1,
-          questionCountAddition: state.questionCountAddition,
-          questionCountSubtraction: state.questionCountSubtraction,
-          questionCountMultiplication: state.questionCountMultiplication
         };
       case 'incrementQuestionCountAddition':
         return {
-          questionCount: state.questionCount,
+          ...state,
           questionCountAddition: state.questionCountAddition + 1,
-          questionCountSubtraction: state.questionCountSubtraction,
-          questionCountMultiplication: state.questionCountMultiplication
         };
       case 'incrementQuestionCountSubtraction':
         return {
-          questionCount: state.questionCount,
-          questionCountAddition: state.questionCountAddition,       
+          ...state,   
           questionCountSubtraction: state.questionCountSubtraction + 1,
-          questionCountMultiplication: state.questionCountMultiplication
         };
       case 'incrementQuestionCountMultiplication':
         return {
-          questionCount: state.questionCount,
-          questionCountAddition: state.questionCountAddition,       
-          questionCountSubtraction: state.questionCountSubtraction,
+          ...state,
           questionCountMultiplication: state.questionCountMultiplication + 1
         };
+      case 'getCurrentState':
+      return {
+        ...state,
+      };
       default:
         console.log('default from reduer!')
     }

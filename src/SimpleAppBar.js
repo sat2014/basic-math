@@ -1,25 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import styles from './styles';
 
-const styles = {
-  root: {
-    flexGrow: 1,
-  },
-};
-
-function SimpleAppBar(props) {
-  const { classes } = props;
-
+function SimpleAppBar() {
   return (
-    <div className={classes.root}>
-      <AppBar position="static" color="default">
+    <div className={JSON.stringify(styles.root)}>
+      <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" color="inherit" align="center">
-                Basic Math
+          <IconButton className={JSON.stringify(styles.menuButton)} color="inherit" aria-label="Menu">
+            <MenuIcon />
+          </IconButton>        
+          <Typography variant="h6" color="inherit" className={JSON.stringify(styles.grow)}>
+            Baic Math
           </Typography>
         </Toolbar>
       </AppBar>
@@ -27,8 +23,4 @@ function SimpleAppBar(props) {
   );
 }
 
-SimpleAppBar.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(SimpleAppBar);
+export default SimpleAppBar;
