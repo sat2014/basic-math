@@ -5,6 +5,10 @@ const styles = theme => ({
     root: {
       display: 'flex',
       flexWrap: 'wrap',
+      flexGrow: 1,
+    },
+    grow: {
+      flexGrow: 1,
     },
     margin: {
       margin: theme.spacing.unit,
@@ -27,7 +31,11 @@ const styles = theme => ({
     },
     multilineColor:{
       color:'red',
-    },
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  },
 });
   
 export default styles(theme)
