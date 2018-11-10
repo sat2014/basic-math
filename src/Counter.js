@@ -32,8 +32,8 @@ function Counter() {
   let [displayMessage, setDisplayMessage] = useState('Welcome')
   let [snackbarOpen, setSnackbarOpen] = useState(true)
 
+  //const [state, dispatch] = useReducer(reducer, initialState);
   const [state, dispatch] = useReducer(reducer, initialState);
-  
 
     let message = (
       <span
