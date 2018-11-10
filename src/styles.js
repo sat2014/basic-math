@@ -34,7 +34,12 @@ const styles = theme => ({
   },
   menuButton: {
     marginLeft: -12,
-    marginRight: 20,
+    marginRight: 16,
+  },
+
+  rightToolbar: {
+    marginLeft: 'auto',
+    marginRight: -12,
   },
 });
   

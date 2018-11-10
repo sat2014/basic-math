@@ -3,7 +3,9 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
+import MoreIcon from '@material-ui/icons/MoreVert';
 import styles from './styles';
 
 function SimpleAppBar() {
@@ -17,10 +19,12 @@ function SimpleAppBar() {
           <Typography variant="h6" color="inherit" className={JSON.stringify(styles.grow)}>
             Baic Math
           </Typography>
-          <IconButton color="inherit">
-              <MoreIcon />
-          </IconButton>
-          <Button color="inherit">Login</Button>
+          {/* <section className={JSON.stringify(styles.rightToolbar)}>
+            <IconButton color="inherit" aria-label="More Options">
+                <MoreIcon />
+            </IconButton>
+            <Button color="inherit">Login</Button>
+          </section> */}
         </Toolbar>
       </AppBar>
     </div>
