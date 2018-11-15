@@ -17,8 +17,13 @@ import reducer from './reducers/reducerCount';
 import initialState from './reducers/initialState/initialStateCount';
 import SimpleAppBar from './SimpleAppBar'
 import Fade from '@material-ui/core/Fade';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import AccessAlarm from '@material-ui/icons/AccessAlarm'
 
 function Counter() {
+  let [welcome, setWelcome] = useState(true)
+  let [operations, setOperations] = useState(false)
   let [mathOperator, setMathOperator] = useState('+')
   let [numberOfDigits, setNumberOfDigits] = useState(1)
   let [minimumNumber, setMinimumNumber] = useState(0)
@@ -27,6 +32,31 @@ function Counter() {
   let [firstNumber, setFirstNumber] = useState(Math.floor(Math.random() * (maximumNumber - minimumNumber + 1)) + 0)
   let [secondNumber, setSecondNumber] = useState(Math.floor(Math.random() * (maximumNumber - minimumNumber + 1)) + 0)
   let [total, setTotal] = useState('')
+
+  let [counting, setCounting] = useState(false)
+  let [levelCounting, setLevelCounting] = useState(1)
+  let [randomNumber1, setRandomNumber1] = useState(0)
+  let [randomNumber2, setRandomNumber2] = useState(0)
+  let [randomNumber3, setRandomNumber3] = useState(0)
+  let [randomNumber4, setRandomNumber4] = useState(0)
+  let [randomNumber5, setRandomNumber5] = useState(0)
+  let [randomNumber6, setRandomNumber6] = useState(0)
+  let [randomNumber7, setRandomNumber7] = useState(0)
+  let [randomNumber8, setRandomNumber8] = useState(0)
+  let [randomNumber9, setRandomNumber9] = useState(0)
+  let [randomNumber10, setRandomNumber10] = useState(0)
+  let [randomNumber11, setRandomNumber11] = useState(0)
+  let [randomNumber12, setRandomNumber12] = useState(0)
+  let [randomNumber13, setRandomNumber13] = useState(0)
+  let [randomNumber14, setRandomNumber14] = useState(0)
+  let [randomNumber15, setRandomNumber15] = useState(0)
+  let [randomNumber16, setRandomNumber16] = useState(0)
+  let [randomNumber17, setRandomNumber17] = useState(0)
+  let [randomNumber18, setRandomNumber18] = useState(0)
+  let [randomNumber19, setRandomNumber19] = useState(0)
+  let [randomNumber20, setRandomNumber20] = useState(0)
+
+  let [countTotal, setCountTotal] = useState(0)
 
   let [displayMessage, setDisplayMessage] = useState('Welcome')
   let [snackbarOpen, setSnackbarOpen] = useState(true)
@@ -146,10 +176,122 @@ function Counter() {
   //   setMathOperator(event.target.value)
   // }
 
+  let setRandomValues = () => {
+    let random1 = Math.round(Math.random())
+    setRandomNumber1(random1)
+    let random2 = Math.round(Math.random())
+    setRandomNumber2(random2)
+    let random3 = Math.round(Math.random())
+    setRandomNumber3(random3)
+    let random4 = Math.round(Math.random())
+    setRandomNumber4(random4)
+    let random5 = Math.round(Math.random())
+    setRandomNumber5(random5)
+    let random6 = Math.round(Math.random())
+    setRandomNumber6(random6)
+    let random7 = Math.round(Math.random())
+    setRandomNumber7(random7)
+    let random8 = Math.round(Math.random())
+    setRandomNumber8(random8)
+    let random9 = Math.round(Math.random())
+    setRandomNumber9(random9)
+    let random10 = Math.round(Math.random())
+    setRandomNumber10(random10)
+    let random11 = Math.round(Math.random())
+    setRandomNumber11(random11)
+    let random12 = Math.round(Math.random())
+    setRandomNumber12(random12)
+    let random13 = Math.round(Math.random())
+    setRandomNumber13(random13)
+    let random14 = Math.round(Math.random())
+    setRandomNumber14(random14)
+    let random15 = Math.round(Math.random())
+    setRandomNumber15(random15)
+    let random16 = Math.round(Math.random())
+    setRandomNumber16(random16)
+    let random17 = Math.round(Math.random())
+    setRandomNumber17(random17)
+    let random18 = Math.round(Math.random())
+    setRandomNumber18(random18)
+    let random19 = Math.round(Math.random())
+    setRandomNumber19(random19)
+    let random20 = Math.round(Math.random())
+    setRandomNumber20(random20)
+
+    setCountTotal(random1 + random2 + random3 + random4 + random5 + random6 + random7 + random8 + random9 +
+      random10+random11+random12+random13+random14+random15+random16+random17+random18+random19+random20)
+  }
+
+  let handleCounting = (event) => { 
+    // console.log('This is from Counting!')    
+    setOperations(false)
+    setWelcome(false)
+    setCounting(true)
+    setRandomValues()
+  }
+
+  let handleOperations = (event) => { 
+    // console.log('This is from Operations!')
+    setCounting(false)
+    setWelcome(false)
+    setOperations(true)
+  }
   
+  let handleLevelCounting = props => event => {
+    setLevelCounting(event.target.value)  
+
+    // let random1 = Math.round(Math.random())
+    // setRandomNumber1(random1)
+    // let random2 = Math.round(Math.random())
+    // setRandomNumber2(random2)
+    // let random3 = Math.round(Math.random())
+    // setRandomNumber3(random3)
+    // let random4 = Math.round(Math.random())
+    // setRandomNumber4(random4)
+    // let random5 = Math.round(Math.random())
+    // setRandomNumber5(random5)
+    // let random6 = Math.round(Math.random())
+    // setRandomNumber6(random6)
+    // let random7 = Math.round(Math.random())
+    // setRandomNumber7(random7)
+    // let random8 = Math.round(Math.random())
+    // setRandomNumber8(random8)
+    // let random9 = Math.round(Math.random())
+    // setRandomNumber9(random9)
+
+    // setCountTotal(random1+random2+random3+random4+random5+random6+random7+random8+random9)
+  }
+
+  let handleSubmitCounting = (event) => { 
+    // console.log('=======')
+    // console.log(total)
+    // console.log(countTotal)
+    if (parseInt(total)===parseInt(countTotal)) {
+      setDisplayMessage('Correct!')
+      setSnackbarOpen(true)
+      // console.log('The counting is correct')
+      setTotal('')
+      setRandomValues()
+    }
+    else {
+      setDisplayMessage('Oops, try again!')
+      setSnackbarOpen(true)
+      // console.log('The counting is not correct')
+      setTotal('')
+    }      
+  }
 
   return (<MuiThemeProvider theme={theme}>
-  <SimpleAppBar />
+  {/* <SimpleAppBar /> */}
+  <AppBar position="static">
+    <Toolbar>         
+      {/* <Typography variant="h6" color="inherit" className={JSON.stringify(styles.grow)}>
+        Basic Math:
+      </Typography>          */}
+        <Button color="inherit" onClick={()=>handleCounting()}>Counting</Button>
+        <Button color="inherit" onClick={()=>handleOperations()}>Operations</Button>   
+    </Toolbar>
+  </AppBar>
   <div className={styles.root}>
   <br />
   <br />
@@ -162,10 +304,19 @@ function Counter() {
         onClose={() => setSnackbarOpen(false)}
         open={snackbarOpen}
         TransitionComponent={Fade}
-      />
+  />
+  {
+    welcome && 
+      <center>
+        <Typography variant="h6" color="inherit" className={JSON.stringify(styles.grow)}>
+          Welcome to Basic Math training
+        </Typography>  
+      </center>    
+  }
+  {operations && 
     <center>
-      <FormControl required className={JSON.stringify(styles.formControl)}>
-      <InputLabel htmlFor="operator-native-simple">Operator</InputLabel>
+      <FormControl className={JSON.stringify(styles.formControl)}>
+      <InputLabel htmlFor="operator-native-simple">Operation</InputLabel>
           <Select
             native
             value={mathOperator}
@@ -176,15 +327,15 @@ function Counter() {
               id: 'mathOperator-native-required',
             }}
           >
-            <option value="+">Add (+)</option>
-            <option value="-">Subtract (-)</option>
-            <option value="*">Multiply (*)</option>
+            <option value="+">Addition (+)</option>
+            <option value="-">Subtraction (-)</option>
+            <option value="*">Multiplication (*)</option>
           </Select>
       </FormControl>
   
       
-      <FormControl required className={JSON.stringify(styles.formControl)}>
-      <InputLabel htmlFor="digits-native-simple">Digits</InputLabel>
+      <FormControl className={JSON.stringify(styles.formControl)}>
+      <InputLabel htmlFor="digits-native-simple">Level</InputLabel>
           <Select
             native
             value={numberOfDigits}
@@ -196,9 +347,7 @@ function Counter() {
             }}
           >
             <option value={1}>1</option>
-            <option value={2}>2</option>
-            <option value={3}>3</option>
-            <option value={4}>4</option>
+            <option value={2}>2</option>           
           </Select>
       </FormControl>    
 
@@ -261,6 +410,98 @@ function Counter() {
       </Paper>
         <hr />
     </center>
+    }
+    {
+    counting && 
+      <center>
+        <Typography variant="h6" color="inherit" className={JSON.stringify(styles.grow)}>
+          Can you count the number of clocks?
+        </Typography>  
+        {/* <FormControl className={JSON.stringify(styles.formControl)}>
+          <InputLabel htmlFor="digits-native-simple">Level</InputLabel>
+          <Select
+            native
+            value={levelCounting}
+            onChange={handleLevelCounting()}
+            name="levelCounting"
+            inputProps={{
+              name: 'levelCounting',
+              id: 'levelCounting-native-required',
+            }}
+          >
+            <option value={1}>1</option>
+            <option value={2}>2</option>           
+          </Select>
+      </FormControl>  */}
+      <br />
+      <br />
+      <hr />
+      <Paper className={JSON.stringify(styles.root)} elevation={1}>
+        {/* <Typography variant="h4" component="h3">
+          {firstNumber}
+        </Typography>
+        <Typography variant="h4" component="h3">
+          {mathOperator}
+        </Typography>
+        <Typography variant="h4" component="h3">
+          {secondNumber}
+        </Typography> */}
+            
+            {randomNumber1===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
+            {randomNumber2===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
+            {randomNumber3===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
+            <br />
+            {randomNumber4===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
+            {randomNumber5===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
+            {randomNumber6===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
+            <br />
+            {randomNumber7===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
+            {randomNumber8===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
+            {randomNumber9===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
+            <br />
+            
+            {randomNumber10===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
+            {randomNumber11===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
+            {randomNumber12===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}           
+            {randomNumber13===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
+            <br />
+            {randomNumber14===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
+            {randomNumber15===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}           
+            {randomNumber16===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
+            {randomNumber17===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
+            <br />
+            {randomNumber18 === 1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
+            {randomNumber19===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
+            {randomNumber20===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
+            <br />
+            <TextField
+                id="total-addition"
+                className={classNames(styles.margin, styles.textField)}
+                variant="outlined"
+                type="number"
+                label=""          
+                value={total}
+                onChange={handleChangeTotal()}   
+                autoFocus={true}
+                InputProps={{
+                  startAdornment: <InputAdornment position="start">=</InputAdornment>,
+                }}
+            />
+
+            <p />
+            <Button
+              variant="contained"
+              color="primary"       
+              onClick={()=>handleSubmitCounting()}
+            >
+              Submit
+            </Button >
+                
+            {/* {console.log(countTotal)} */}
+      </Paper>
+      <hr />
+      </center>    
+  }
   </div>
   </MuiThemeProvider>)
 }

@@ -7,24 +7,29 @@ import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import styles from './styles';
+import Counting from './Counting'
 
 function SimpleAppBar() {
+  let handleCounting = (event) => { 
+    
+  }
   return (
     <div className={JSON.stringify(styles.root)}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton className={JSON.stringify(styles.menuButton)} color="inherit" aria-label="Menu">
+          {/* <IconButton className={JSON.stringify(styles.menuButton)} color="inherit" aria-label="Menu">
             <MenuIcon />
-          </IconButton>        
+          </IconButton>         */}
           <Typography variant="h6" color="inherit" className={JSON.stringify(styles.grow)}>
-            Baic Math
+            Basic Math:
           </Typography>
           {/* <section className={JSON.stringify(styles.rightToolbar)}>
             <IconButton color="inherit" aria-label="More Options">
                 <MoreIcon />
-            </IconButton>
-            <Button color="inherit">Login</Button>
-          </section> */}
+            </IconButton>*/}
+            <Button color="inherit" onClick={()=>handleCounting()}>Counting</Button>
+            <Button color="inherit">Operations</Button>           
+          {/* </section>  */}
         </Toolbar>
       </AppBar>
     </div>

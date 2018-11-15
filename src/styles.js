@@ -41,6 +41,10 @@ const styles = theme => ({
     marginLeft: 'auto',
     marginRight: -12,
   },
+
+  icon: {
+    margin: theme.spacing.unit * 2,
+  },
 });
   
 export default styles(theme)
