@@ -19,9 +19,12 @@ import SimpleAppBar from './SimpleAppBar'
 import Fade from '@material-ui/core/Fade';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import AccessAlarm from '@material-ui/icons/AccessAlarm'
+import shapes from './Shapes';
+import ResultsTable from './ResultsTable'
+
 
 function Counter() {
+  let [results, setResults] = useState(false)
   let [welcome, setWelcome] = useState(true)
   let [operations, setOperations] = useState(false)
   let [mathOperator, setMathOperator] = useState('+')
@@ -35,6 +38,7 @@ function Counter() {
 
   let [counting, setCounting] = useState(false)
   let [levelCounting, setLevelCounting] = useState(1)
+
   let [randomNumber1, setRandomNumber1] = useState(0)
   let [randomNumber2, setRandomNumber2] = useState(0)
   let [randomNumber3, setRandomNumber3] = useState(0)
@@ -64,6 +68,8 @@ function Counter() {
   //const [state, dispatch] = useReducer(reducer, initialState);
   const [state, dispatch] = useReducer(reducer, initialState);
 
+  let [randomIcon, setRandomIcon] = useState(Math.floor(Math.random() * shapes.length) + 1)
+
     let message = (
       <span
         id="snackbar-message-id"
@@ -90,7 +96,7 @@ function Counter() {
             setFirstNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
             setSecondNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
             setTotal('')
-            dispatch({ type: 'incrementQuestionCount' })
+            // dispatch({ type: 'incrementQuestionCount' })
             dispatch({ type: 'incrementQuestionCountAddition' })
             // setQuestionCount(++questionCount)
            // useDocumentTitle(`Baic Math: ${mathOperator}`)
@@ -107,7 +113,7 @@ function Counter() {
             setFirstNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
             setSecondNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
             setTotal('')
-            dispatch({ type: 'incrementQuestionCount' })
+            // dispatch({ type: 'incrementQuestionCount' })
             dispatch({ type: 'incrementQuestionCountSubtraction' })
             // setQuestionCount(++questionCount)
            // useDocumentTitle(`Baic Math: ${mathOperator}`)
@@ -124,7 +130,7 @@ function Counter() {
           setFirstNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
           setSecondNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
           setTotal('')
-          dispatch({ type: 'incrementQuestionCount' })
+          // dispatch({ type: 'incrementQuestionCount' })
           dispatch({ type: 'incrementQuestionCountMultiplication' })
           // setQuestionCount(++questionCount)
          // useDocumentTitle(`Baic Math: ${mathOperator}`)
@@ -218,14 +224,18 @@ function Counter() {
     let random20 = Math.round(Math.random())
     setRandomNumber20(random20)
 
-    setCountTotal(random1 + random2 + random3 + random4 + random5 + random6 + random7 + random8 + random9 +
-      random10+random11+random12+random13+random14+random15+random16+random17+random18+random19+random20)
+    setCountTotal(
+      random1 + random2 + random3 + random4 + random5 + random6 + random7 + random8 + random9 +
+      random10 + random11 + random12 + random13 + random14 + random15 + random16 + random17 + random18 + random19 + random20
+    )
+    setRandomIcon(Math.floor(Math.random() * (shapes.length-1) + 1  ))
   }
 
   let handleCounting = (event) => { 
     // console.log('This is from Counting!')    
     setOperations(false)
     setWelcome(false)
+    setResults(false)
     setCounting(true)
     setRandomValues()
   }
@@ -234,68 +244,48 @@ function Counter() {
     // console.log('This is from Operations!')
     setCounting(false)
     setWelcome(false)
+    setResults(false)
     setOperations(true)
+  }
+
+  let handleResults = events => {
+    setCounting(false)
+    setWelcome(false)  
+    setOperations(false)
+    setResults(true)
   }
   
   let handleLevelCounting = props => event => {
     setLevelCounting(event.target.value)  
-
-    // let random1 = Math.round(Math.random())
-    // setRandomNumber1(random1)
-    // let random2 = Math.round(Math.random())
-    // setRandomNumber2(random2)
-    // let random3 = Math.round(Math.random())
-    // setRandomNumber3(random3)
-    // let random4 = Math.round(Math.random())
-    // setRandomNumber4(random4)
-    // let random5 = Math.round(Math.random())
-    // setRandomNumber5(random5)
-    // let random6 = Math.round(Math.random())
-    // setRandomNumber6(random6)
-    // let random7 = Math.round(Math.random())
-    // setRandomNumber7(random7)
-    // let random8 = Math.round(Math.random())
-    // setRandomNumber8(random8)
-    // let random9 = Math.round(Math.random())
-    // setRandomNumber9(random9)
-
-    // setCountTotal(random1+random2+random3+random4+random5+random6+random7+random8+random9)
   }
 
   let handleSubmitCounting = (event) => { 
-    // console.log('=======')
-    // console.log(total)
-    // console.log(countTotal)
     if (parseInt(total)===parseInt(countTotal)) {
       setDisplayMessage('Correct!')
       setSnackbarOpen(true)
-      // console.log('The counting is correct')
       setTotal('')
+      dispatch({ type: 'incrementQuestionCountCounting' })
       setRandomValues()
     }
     else {
       setDisplayMessage('Oops, try again!')
       setSnackbarOpen(true)
-      // console.log('The counting is not correct')
       setTotal('')
     }      
   }
 
   return (<MuiThemeProvider theme={theme}>
-  {/* <SimpleAppBar /> */}
   <AppBar position="static">
     <Toolbar>         
-      {/* <Typography variant="h6" color="inherit" className={JSON.stringify(styles.grow)}>
-        Basic Math:
-      </Typography>          */}
         <Button color="inherit" onClick={()=>handleCounting()}>Counting</Button>
-        <Button color="inherit" onClick={()=>handleOperations()}>Operations</Button>   
+        <Button color="inherit" onClick={() => handleOperations()}>Operations</Button>   
+        <Button color="inherit" onClick={()=>handleResults()}>Results</Button>   
     </Toolbar>
   </AppBar>
   <div className={styles.root}>
   <br />
-  <br />
-  <br />
+  {/* <br />
+  <br /> */}
   <Snackbar
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
         className={JSON.stringify(styles.margin)}
@@ -389,7 +379,7 @@ function Counter() {
       >
         Submit
       </Button >
-      <hr />
+      {/* <hr />
       <Paper className={JSON.stringify(styles.root)} elevation={1}>
         <Typography variant="h6" component="h3">
          Summary:
@@ -408,14 +398,14 @@ function Counter() {
           Total:{state.questionCount}
         </Typography>  
       </Paper>
-        <hr />
+        <hr /> */}
     </center>
     }
     {
     counting && 
       <center>
         <Typography variant="h6" color="inherit" className={JSON.stringify(styles.grow)}>
-          Can you count the number of clocks?
+          Can you count the number of items?
         </Typography>  
         {/* <FormControl className={JSON.stringify(styles.formControl)}>
           <InputLabel htmlFor="digits-native-simple">Level</InputLabel>
@@ -436,43 +426,32 @@ function Counter() {
       <br />
       <br />
       <hr />
-      <Paper className={JSON.stringify(styles.root)} elevation={1}>
-        {/* <Typography variant="h4" component="h3">
-          {firstNumber}
-        </Typography>
-        <Typography variant="h4" component="h3">
-          {mathOperator}
-        </Typography>
-        <Typography variant="h4" component="h3">
-          {secondNumber}
-        </Typography> */}
-            
-            {randomNumber1===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
-            {randomNumber2===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
-            {randomNumber3===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
+      <Paper className={JSON.stringify(styles.root)} elevation={1}>       
+            {randomNumber1===1 && shapes[randomIcon]}
+            {randomNumber2===1 && shapes[randomIcon]}
+            {randomNumber3===1 && shapes[randomIcon]}
             <br />
-            {randomNumber4===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
-            {randomNumber5===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
-            {randomNumber6===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
+            {randomNumber4===1 && shapes[randomIcon]}
+            {randomNumber5===1 && shapes[randomIcon]}
+            {randomNumber6===1 && shapes[randomIcon]}
             <br />
-            {randomNumber7===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
-            {randomNumber8===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
-            {randomNumber9===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
+            {randomNumber7===1 && shapes[randomIcon]}
+            {randomNumber8===1 && shapes[randomIcon]}
+            {randomNumber9===1 && shapes[randomIcon]}
+            <br />            
+            {randomNumber10===1 && shapes[randomIcon]}
+            {randomNumber11===1 && shapes[randomIcon]}
+            {randomNumber12===1 && shapes[randomIcon]}           
+            {randomNumber13===1 && shapes[randomIcon]}
             <br />
-            
-            {randomNumber10===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
-            {randomNumber11===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
-            {randomNumber12===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}           
-            {randomNumber13===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
+            {randomNumber14===1 && shapes[randomIcon]}
+            {randomNumber15===1 && shapes[randomIcon]}           
+            {randomNumber16===1 && shapes[randomIcon]}
+            {randomNumber17===1 && shapes[randomIcon]}
             <br />
-            {randomNumber14===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
-            {randomNumber15===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}           
-            {randomNumber16===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
-            {randomNumber17===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
-            <br />
-            {randomNumber18 === 1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
-            {randomNumber19===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
-            {randomNumber20===1 && <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" />}
+            {randomNumber18 === 1 && shapes[randomIcon]}
+            {randomNumber19===1 && shapes[randomIcon]}
+            {randomNumber20===1 && shapes[randomIcon]}
             <br />
             <TextField
                 id="total-addition"
@@ -487,7 +466,6 @@ function Counter() {
                   startAdornment: <InputAdornment position="start">=</InputAdornment>,
                 }}
             />
-
             <p />
             <Button
               variant="contained"
@@ -496,11 +474,36 @@ function Counter() {
             >
               Submit
             </Button >
-                
-            {/* {console.log(countTotal)} */}
       </Paper>
       <hr />
       </center>    
+  }
+  {
+    results &&  
+    <center>
+      {/* <Paper className={JSON.stringify(styles.root)} elevation={1}>
+        <Typography variant="h6" component="h3">
+        Here are your results:
+        </Typography>
+        <hr />
+        <Typography variant="h6" component="h3">
+          Counting: {state.questionCountCounting}
+        </Typography>
+        <Typography variant="h6" component="h3">
+          Addition: {state.questionCountAddition}
+        </Typography>
+        <Typography variant="h6" component="h3">
+          Subtraction: {state.questionCountSubtraction}
+        </Typography>
+        <Typography variant="h6" component="h3">
+          Multiplication: {state.questionCountMultiplication}
+        </Typography>
+        <Typography variant="h6" component="h3">
+          Total:{state.questionCount}
+        </Typography>  
+      </Paper> */}
+      <ResultsTable counting={state.questionCountCounting} addition={state.questionCountAddition} subtraction={state.questionCountSubtraction} multiplication={state.questionCountMultiplication}/>
+    </center>  
   }
   </div>
   </MuiThemeProvider>)

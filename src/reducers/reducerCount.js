@@ -24,6 +24,11 @@ function reducerCount(state, action) {
           ...state,
           questionCountMultiplication: state.questionCountMultiplication + 1
         };
+      case 'incrementQuestionCountCounting':
+        return {
+          ...state,
+          questionCountCounting: state.questionCountCounting + 1,
+        };
       case 'getCurrentState':
       return {
         ...state,
