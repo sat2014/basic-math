@@ -11,7 +11,7 @@ class BarChart extends React.Component {
         const data = this.props.data;
         const chartWidth = 400;
         const chartHeight = 500;
-        const chartDomain = [0, chartHeight];
+        const chartDomain = [0, 20];
         return (
             <XYPlot 
                 xType="ordinal" 

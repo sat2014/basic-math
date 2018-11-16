@@ -45,6 +45,12 @@ const styles = theme => ({
   icon: {
     margin: theme.spacing.unit * 2,
   },
+  formControl: {
+    margin: theme.spacing.unit * 3,
+  },
+  group: {
+    margin: `${theme.spacing.unit}px 0`,
+  },
 });
   
 export default styles(theme)

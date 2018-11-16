@@ -22,6 +22,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 import shapes from './Shapes';
 import ResultsTable from './ResultsTable'
 import BarChart from './BarChart'
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
+
 
 
 function Counter() {
@@ -66,6 +71,12 @@ function Counter() {
   let [displayMessage, setDisplayMessage] = useState('Welcome')
   let [snackbarOpen, setSnackbarOpen] = useState(true)
 
+  let [selectedValue, setSelectedValue] = useState(1)
+  let [choice1, setChoice1] = useState(1)
+  let [choice2, setChoice2] = useState(2)
+  let [choice3, setChoice3] = useState(3)
+  let [choice4, setChoice4] = useState(4)
+
   //const [state, dispatch] = useReducer(reducer, initialState);
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -90,19 +101,91 @@ function Counter() {
     setTotal(event.target.value)
   }
 
+  // let handleSubmit = (event) => {
+  //   switch(mathOperator) {
+  //     case '+':
+  //         if (parseInt(total) === parseInt((firstNumber + secondNumber))) {
+  //           setDisplayMessage('Correct!')
+  //           setSnackbarOpen(true)
+  //           setFirstNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
+  //           setSecondNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
+  //           setTotal('')
+  //           // dispatch({ type: 'incrementQuestionCount' })
+  //           dispatch({ type: 'incrementQuestionCountAddition' })
+  //           // setQuestionCount(++questionCount)
+  //          // useDocumentTitle(`Baic Math: ${mathOperator}`)
+  //         }
+  //         else {
+  //           setDisplayMessage('Oops, try again!')
+  //           setSnackbarOpen(true)
+  //         }
+  //         break;
+  //     case '-':
+  //         if (parseInt(total) === parseInt((firstNumber - secondNumber))) {
+  //           setDisplayMessage('Correct!')
+  //           setSnackbarOpen(true)
+  //           setFirstNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
+  //           setSecondNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
+  //           setTotal('')
+  //           // dispatch({ type: 'incrementQuestionCount' })
+  //           dispatch({ type: 'incrementQuestionCountSubtraction' })
+  //           // setQuestionCount(++questionCount)
+  //          // useDocumentTitle(`Baic Math: ${mathOperator}`)
+  //         }
+  //         else {
+  //           setDisplayMessage('Oops, try again!')
+  //           setSnackbarOpen(true)
+  //         }
+  //       break;
+  //     case '*':
+  //       if (parseInt(total) === parseInt((firstNumber * secondNumber))) {
+  //         setDisplayMessage('Correct!')
+  //         setSnackbarOpen(true)
+  //         setFirstNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
+  //         setSecondNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
+  //         setTotal('')
+  //         // dispatch({ type: 'incrementQuestionCount' })
+  //         dispatch({ type: 'incrementQuestionCountMultiplication' })
+  //         // setQuestionCount(++questionCount)
+  //        // useDocumentTitle(`Baic Math: ${mathOperator}`)
+  //       }
+  //       else {
+  //         setDisplayMessage('Oops, try again!')
+  //         setSnackbarOpen(true)
+  //       }
+  //       break;
+  //     default:
+  //         console.log('default case...')
+  //   }
+  // }
+
+  let setChoicesForOperations = (fNumber, sNumber) => {
+    let num=fNumber+sNumber
+    let tempArray=shuffle([num, num-1, num+1, num+2])
+    setChoice1(tempArray[0])
+    setChoice2(tempArray[1])
+    setChoice3(tempArray[2])
+    setChoice4(tempArray[3])
+    setSelectedValue(1)
+  }
+
   let handleSubmit = (event) => {
+    setSelectedValue(event.target.value)
     switch(mathOperator) {
       case '+':
-          if (parseInt(total) === parseInt((firstNumber + secondNumber))) {
+          if (parseInt(event.target.value) === parseInt((firstNumber + secondNumber))) {
             setDisplayMessage('Correct!')
             setSnackbarOpen(true)
-            setFirstNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
-            setSecondNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
-            setTotal('')
+            let fNumber = Math.floor(Math.random() * (10 - 0 + 1)) + 0
+            setFirstNumber(fNumber)
+            let sNumber=Math.floor(Math.random() * (10 - 0 + 1)) + 0
+            setSecondNumber(sNumber)            
+            // setTotal('')
             // dispatch({ type: 'incrementQuestionCount' })
             dispatch({ type: 'incrementQuestionCountAddition' })
             // setQuestionCount(++questionCount)
            // useDocumentTitle(`Baic Math: ${mathOperator}`)
+           setChoicesForOperations(fNumber, sNumber)
           }
           else {
             setDisplayMessage('Oops, try again!')
@@ -110,16 +193,19 @@ function Counter() {
           }
           break;
       case '-':
-          if (parseInt(total) === parseInt((firstNumber - secondNumber))) {
+          if (parseInt(event.target.value) === parseInt((firstNumber - secondNumber))) {
             setDisplayMessage('Correct!')
             setSnackbarOpen(true)
-            setFirstNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
-            setSecondNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
-            setTotal('')
+            let fNumber = Math.floor(Math.random() * (10 - 0 + 1)) + 0
+            setFirstNumber(fNumber)
+            let sNumber=Math.floor(Math.random() * (10 - 0 + 1)) + 0
+            setSecondNumber(sNumber)
+            // setTotal('')
             // dispatch({ type: 'incrementQuestionCount' })
             dispatch({ type: 'incrementQuestionCountSubtraction' })
             // setQuestionCount(++questionCount)
            // useDocumentTitle(`Baic Math: ${mathOperator}`)
+           setChoicesForOperations(fNumber, sNumber)
           }
           else {
             setDisplayMessage('Oops, try again!')
@@ -127,16 +213,19 @@ function Counter() {
           }
         break;
       case '*':
-        if (parseInt(total) === parseInt((firstNumber * secondNumber))) {
+        if (parseInt(event.target.value) === parseInt((firstNumber * secondNumber))) {
           setDisplayMessage('Correct!')
           setSnackbarOpen(true)
-          setFirstNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
-          setSecondNumber(Math.floor(Math.random() * (10 - 0 + 1)) + 0)
-          setTotal('')
+          let fNumber = Math.floor(Math.random() * (10 - 0 + 1)) + 0
+            setFirstNumber(fNumber)
+            let sNumber=Math.floor(Math.random() * (10 - 0 + 1)) + 0
+            setSecondNumber(sNumber)
+          // setTotal('')
           // dispatch({ type: 'incrementQuestionCount' })
           dispatch({ type: 'incrementQuestionCountMultiplication' })
           // setQuestionCount(++questionCount)
          // useDocumentTitle(`Baic Math: ${mathOperator}`)
+         setChoicesForOperations(fNumber, sNumber)
         }
         else {
           setDisplayMessage('Oops, try again!')
@@ -147,6 +236,7 @@ function Counter() {
           console.log('default case...')
     }
   }
+
 
   let handleChangeNumberOfDigits = props => event => {
     setNumberOfDigits(event.target.value)
@@ -184,6 +274,14 @@ function Counter() {
   // let handleChangeMathOperator = prop => event => {
   //   setMathOperator(event.target.value)
   // }
+
+let shuffle = a => {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
 
   let setRandomValues = () => {
     let random1 = Math.round(Math.random())
@@ -232,6 +330,15 @@ function Counter() {
       random10 + random11 + random12 + random13 + random14 + random15 + random16 + random17 + random18 + random19 + random20
     )
     setRandomIcon(Math.floor(Math.random() * (shapes.length-1) + 1  ))
+    
+    let num = random1 + random2 + random3 + random4 + random5 + random6 + random7 + random8 + random9 +
+      random10 + random11 + random12 + random13 + random14 + random15 + random16 + random17 + random18 + random19 + random20
+    let tempArray=shuffle([num, num-1, num+1, num+2])
+    setChoice1(tempArray[0])
+    setChoice2(tempArray[1])
+    setChoice3(tempArray[2])
+    setChoice4(tempArray[3])
+    setSelectedValue(1)
   }
 
   let handleCounting = (event) => { 
@@ -243,12 +350,14 @@ function Counter() {
     setRandomValues()
   }
 
+
   let handleOperations = (event) => { 
     // console.log('This is from Operations!')
     setCounting(false)
     setWelcome(false)
     setResults(false)
     setOperations(true)
+    setChoicesForOperations(firstNumber, secondNumber)
   }
 
   let handleResults = events => {
@@ -262,18 +371,40 @@ function Counter() {
     setLevelCounting(event.target.value)  
   }
 
+  // let handleSubmitCounting = (event) => { 
+  //   if (parseInt(total)===parseInt(countTotal)) {
+  //     setDisplayMessage('Correct!')
+  //     setSnackbarOpen(true)
+  //     setTotal('')
+  //     dispatch({ type: 'incrementQuestionCountCounting' })
+  //     setRandomValues()
+  //   }
+  //   else {
+  //     setDisplayMessage('Oops, try again!')
+  //     setSnackbarOpen(true)
+  //     setTotal('')
+  //   }      
+  // }
+
   let handleSubmitCounting = (event) => { 
-    if (parseInt(total)===parseInt(countTotal)) {
+    // console.log(event.target.value)
+    // console.log(countTotal)
+    setSelectedValue(event.target.value)
+    if (parseInt(event.target.value) === parseInt(countTotal)) {
       setDisplayMessage('Correct!')
       setSnackbarOpen(true)
-      setTotal('')
+      // setTotal('')
       dispatch({ type: 'incrementQuestionCountCounting' })
       setRandomValues()
+      // var delayInMilliseconds = 1000; //2 second
+      // setTimeout(function() {
+      //   setRandomValues()
+      // }, delayInMilliseconds);            
     }
     else {
       setDisplayMessage('Oops, try again!')
       setSnackbarOpen(true)
-      setTotal('')
+      // setTotal('')
     }      
   }
 
@@ -366,8 +497,24 @@ function Counter() {
         </Typography>
       </Paper>
         <hr />
+
+            <FormControl component="fieldset" className={JSON.stringify(styles.formControl)}>
+              <RadioGroup
+                aria-label="Gender"
+                name="gender1"
+                className={JSON.stringify(styles.group)}
+                value={selectedValue}
+                onChange={handleSubmit}
+              >
+              <FormControlLabel value={choice1.toString()} control={<Radio />} label={choice1} />
+              <FormControlLabel value={choice2.toString()} control={<Radio />} label={choice2} />
+              <FormControlLabel value={choice3.toString()} control={<Radio />} label={choice3} />
+              <FormControlLabel value={choice4.toString()} control={<Radio />} label={choice4} />
+              </RadioGroup>
+            </FormControl>
+      
         
-      <TextField
+      {/* <TextField
           id="total-addition"
           className={classNames(styles.margin, styles.textField)}
           variant="outlined"
@@ -388,7 +535,8 @@ function Counter() {
         onClick={()=>handleSubmit()}
       >
         Submit
-      </Button >
+      </Button > */}
+
       {/* <hr />
       <Paper className={JSON.stringify(styles.root)} elevation={1}>
         <Typography variant="h6" component="h3">
@@ -463,7 +611,42 @@ function Counter() {
             {randomNumber19===1 && shapes[randomIcon]}
             {randomNumber20===1 && shapes[randomIcon]}
             <br />
-            <TextField
+            </Paper>
+            <hr />
+
+            <FormControl component="fieldset" className={JSON.stringify(styles.formControl)}>
+              <RadioGroup
+                aria-label="Gender"
+                name="gender1"
+                className={JSON.stringify(styles.group)}
+                value={selectedValue}
+                onChange={handleSubmitCounting}
+              >
+              <FormControlLabel value={choice1.toString()} control={<Radio />} label={choice1} />
+              <FormControlLabel value={choice2.toString()} control={<Radio />} label={choice2} />
+              <FormControlLabel value={choice3.toString()} control={<Radio />} label={choice3} />
+              <FormControlLabel value={choice4.toString()} control={<Radio />} label={choice4} />
+              </RadioGroup>
+            </FormControl>
+
+            {/* <div>
+              <Radio
+                checked={parseInt(selectedValue) === parseInt(choice1)}
+                onChange={handleSubmitCounting}
+                value={choice1.toString()}
+                name="radio-button-demo"
+                aria-label="1"
+              />
+              <Radio
+                checked={parseInt(selectedValue) === parseInt(choice2)}
+                onChange={handleSubmitCounting}
+                value={choice2.toString()}
+                name="radio-button-demo"
+                aria-label="2"
+              />
+            </div> */}
+
+            {/* <TextField
                 id="total-addition"
                 className={classNames(styles.margin, styles.textField)}
                 variant="outlined"
@@ -483,9 +666,9 @@ function Counter() {
               onClick={()=>handleSubmitCounting()}
             >
               Submit
-            </Button >
-      </Paper>
-      <hr />
+            </Button > */}
+      {/* </Paper> */}
+      {/* <hr /> */}
       </center>    
   }
   {
