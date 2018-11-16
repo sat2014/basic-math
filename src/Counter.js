@@ -21,6 +21,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import shapes from './Shapes';
 import ResultsTable from './ResultsTable'
+import BarChart from './BarChart'
 
 
 function Counter() {
@@ -77,7 +78,9 @@ function Counter() {
       />
     );
 
-  useDocumentTitle(`Baic Math: ${mathOperator} ${state.questionCount}`)
+  useDocumentTitle(`Baic Math: ${state.questionCountCounting + state.questionCountAddition + state.questionCountSubtraction + state.questionCountMultiplication}`)
+  
+ 
 
   // useEffect(() => {
   //   document.title = `Baic Math: Question ${questionCount}`;
@@ -274,6 +277,13 @@ function Counter() {
     }      
   }
 
+  let barChartData = [
+    { "y": state.questionCountCounting, "x": "Count" },
+    { "y": state.questionCountAddition, "x": "Add" },
+    { "y": state.questionCountSubtraction, "x": "Subtract" },
+    { "y": state.questionCountMultiplication, "x": "Multiply" }
+]
+
   return (<MuiThemeProvider theme={theme}>
   <AppBar position="static">
     <Toolbar>         
@@ -423,8 +433,8 @@ function Counter() {
             <option value={2}>2</option>           
           </Select>
       </FormControl>  */}
-      <br />
-      <br />
+      {/* <br />
+      <br /> */}
       <hr />
       <Paper className={JSON.stringify(styles.root)} elevation={1}>       
             {randomNumber1===1 && shapes[randomIcon]}
@@ -502,7 +512,8 @@ function Counter() {
           Total:{state.questionCount}
         </Typography>  
       </Paper> */}
-      <ResultsTable counting={state.questionCountCounting} addition={state.questionCountAddition} subtraction={state.questionCountSubtraction} multiplication={state.questionCountMultiplication}/>
+      {/* <ResultsTable counting={state.questionCountCounting} addition={state.questionCountAddition} subtraction={state.questionCountSubtraction} multiplication={state.questionCountMultiplication}/> */}
+      <BarChart data={barChartData} />
     </center>  
   }
   </div>
