@@ -171,8 +171,10 @@ function Counter() {
   // }
 
   let setChoicesForOperations = (fNumber, sNumber, operator) => {
-    let num=eval(fNumber.toString().concat(operator, sNumber)) 
-    let tempArray=shuffle([num, num-1, num+1, num+2])
+    let num=eval(fNumber.toString().concat(operator, sNumber))
+    let diff = operator === "*" ? sNumber : 1
+
+    let tempArray=shuffle([num, num-diff, num+diff, num + 2* diff])
     setChoice1(tempArray[0])
     setChoice2(tempArray[1])
     setChoice3(tempArray[2])
