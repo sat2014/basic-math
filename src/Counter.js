@@ -159,8 +159,19 @@ function Counter() {
   //   }
   // }
 
-  let setChoicesForOperations = (fNumber, sNumber) => {
-    let num=fNumber+sNumber
+  // let setChoicesForOperations = (fNumber, sNumber) => {
+  //   console.log(mathOperator)
+  //   let num=fNumber+sNumber
+  //   let tempArray=shuffle([num, num-1, num+1, num+2])
+  //   setChoice1(tempArray[0])
+  //   setChoice2(tempArray[1])
+  //   setChoice3(tempArray[2])
+  //   setChoice4(tempArray[3])
+  //   setSelectedValue(1)
+  // }
+
+  let setChoicesForOperations = (fNumber, sNumber, operator) => {
+    let num=eval(fNumber.toString().concat(operator, sNumber)) 
     let tempArray=shuffle([num, num-1, num+1, num+2])
     setChoice1(tempArray[0])
     setChoice2(tempArray[1])
@@ -185,7 +196,7 @@ function Counter() {
             dispatch({ type: 'incrementQuestionCountAddition' })
             // setQuestionCount(++questionCount)
            // useDocumentTitle(`Baic Math: ${mathOperator}`)
-           setChoicesForOperations(fNumber, sNumber)
+           setChoicesForOperations(fNumber, sNumber, '+')
           }
           else {
             setDisplayMessage('Oops, try again!')
@@ -205,7 +216,7 @@ function Counter() {
             dispatch({ type: 'incrementQuestionCountSubtraction' })
             // setQuestionCount(++questionCount)
            // useDocumentTitle(`Baic Math: ${mathOperator}`)
-           setChoicesForOperations(fNumber, sNumber)
+           setChoicesForOperations(fNumber, sNumber, '-')
           }
           else {
             setDisplayMessage('Oops, try again!')
@@ -225,7 +236,7 @@ function Counter() {
           dispatch({ type: 'incrementQuestionCountMultiplication' })
           // setQuestionCount(++questionCount)
          // useDocumentTitle(`Baic Math: ${mathOperator}`)
-         setChoicesForOperations(fNumber, sNumber)
+         setChoicesForOperations(fNumber, sNumber, '*')
         }
         else {
           setDisplayMessage('Oops, try again!')
@@ -352,12 +363,13 @@ let shuffle = a => {
 
 
   let handleOperations = (event) => { 
-    // console.log('This is from Operations!')
+    //  console.log('This is from handleOperations!')
     setCounting(false)
     setWelcome(false)
     setResults(false)
     setOperations(true)
-    setChoicesForOperations(firstNumber, secondNumber)
+    // console.log(mathOperator)
+    setChoicesForOperations(firstNumber, secondNumber, mathOperator)
   }
 
   let handleResults = events => {
@@ -369,6 +381,13 @@ let shuffle = a => {
   
   let handleLevelCounting = props => event => {
     setLevelCounting(event.target.value)  
+  }
+
+  let handleOperationChange = e => {
+    setMathOperator(e.target.value)
+    console.log('----------')
+    console.log(e.target.value)
+    setChoicesForOperations(firstNumber, secondNumber, e.target.value)
   }
 
   // let handleSubmitCounting = (event) => { 
@@ -451,7 +470,7 @@ let shuffle = a => {
           <Select
             native
             value={mathOperator}
-            onChange={(e)=>setMathOperator(e.target.value)}
+            onChange={handleOperationChange}
             name="mathOperator"
             inputProps={{
               name: 'mathOperator',
@@ -584,7 +603,8 @@ let shuffle = a => {
       {/* <br />
       <br /> */}
       <hr />
-      <Paper className={JSON.stringify(styles.root)} elevation={1}>       
+      <Paper className={JSON.stringify(styles.root)} elevation={1}> 
+            
             {randomNumber1===1 && shapes[randomIcon]}
             {randomNumber2===1 && shapes[randomIcon]}
             {randomNumber3===1 && shapes[randomIcon]}
