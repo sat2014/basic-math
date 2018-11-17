@@ -6,12 +6,14 @@ import {
     VerticalBarSeries,
     LabelSeries
 } from 'react-vis';
+
 class BarChart extends React.Component {
     render() {
         const data = this.props.data;
+        let chartDomainMax = Math.max(data[0].y, data[1].y, data[2].y, data[3].y)
         const chartWidth = 400;
         const chartHeight = 500;
-        const chartDomain = [0, 20];
+        const chartDomain = [0, chartDomainMax > 0 ? chartDomainMax+10 : 10];
         return (
             <XYPlot 
                 xType="ordinal" 
@@ -21,7 +23,8 @@ class BarChart extends React.Component {
             >
                 <XAxis />
                 <YAxis />
-                <VerticalBarSeries
+                <VerticalBarSeries                    
+                    color="#12939A"
                     data={data}
                 />
                 <LabelSeries

@@ -3,7 +3,7 @@ import {
     AccessAlarm, Android, Watch, Headset, Flight, Mood, Star, Train, Tram, Traffic, DirectionsBike, Speaker, Cloud, ThumbUp, Rowing, Pets, PanTool, Face,
     DonutSmall, Home, Https, Settings, TouchApp, Update, AttachFile, FlashOn, WbSunny, WbIncandescent, LocalGasStation
 } from '@material-ui/icons'
-import styles from './styles';
+import styles from '.';
 
 const shapes = [
     <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
