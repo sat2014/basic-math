@@ -3,6 +3,7 @@ const initialStateCount = {
     questionCountAddition: 0,
     questionCountSubtraction: 0,
     questionCountMultiplication: 0,
+    questionCountDivision: 0,
     questionCountCounting: 0,
   };
   

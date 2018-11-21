@@ -78,14 +78,25 @@ function Counter() {
     />
   )
 
-  useDocumentTitle(`Baic Math: ${state.questionCountCounting + state.questionCountAddition + state.questionCountSubtraction + state.questionCountMultiplication}`)
+  let generateDivisibleNumbers = () => {
+    let divisor_one = 1 + Math.round(Math.random() % maximumNumber * 2)
+    let result = 1 + Math.round(Math.random() % maximumNumber * 2)
+    let divisor_two = divisor_one * result 
+    let divisor = []
+    divisor.push(divisor_two, divisor_one)
+    console.log(divisor)
+    return divisor
+  }
+
+  useDocumentTitle(`Baic Math: ${state.questionCountCounting + state.questionCountAddition + state.questionCountSubtraction + state.questionCountMultiplication + state.questionCountDivision}`)
 
   let setChoicesForOperations = (fNumber, sNumber, operator) => {
     let num = 
       operator === '+' 
         ? fNumber+sNumber : operator === '-' 
         ? fNumber-sNumber : operator === '*' 
-        ? fNumber*sNumber : console.log('Unknown operator for operation!') 
+        ? fNumber*sNumber : operator === '%' 
+        ? fNumber/sNumber : console.log('Unknown operator for operation!') 
     let diff = operator === '*' ? sNumber : 1
     let tempArray=shuffle([num, num-diff, num+diff, num + 2* diff])
     setChoice1(tempArray[0])
@@ -95,7 +106,7 @@ function Counter() {
     setSelectedValue(1)
   }
 
-  let handleSubmit = (event) => {
+  let handleSubmit = event => {
     setSelectedValue(event.target.value)
     switch(mathOperator) {
       case '+':
@@ -158,6 +169,23 @@ function Counter() {
           setSnackbarOpen(true)
         }
         break;
+      case '%':
+      if (parseInt(event.target.value) === parseInt((firstNumber / secondNumber))) {
+        setDisplayMessage('Correct!')
+        setSnackbarOpen(true)
+        let divisor_one = 1 + Math.round(Math.random() % maximumNumber * 2)
+        let result = 1 + Math.round(Math.random() % maximumNumber * 2)
+        let divisor_two = divisor_one * result       
+        setFirstNumber(divisor_two)
+        setSecondNumber(divisor_one)
+        dispatch({ type: 'incrementQuestionCountDivision' })
+        setChoicesForOperations(divisor_two, divisor_one, '%')
+      }
+      else {
+        setDisplayMessage('Oops, try again!')
+        setSnackbarOpen(true)
+      }
+      break;
       default:
           console.log('default case...')
     }
@@ -165,35 +193,37 @@ function Counter() {
 
 
   let handleChangeNumberOfDigits = props => event => {
-    setNumberOfDigits(event.target.value)
-    switch (event.target.value) {
-      case '1':
-        setMinimumNumber(0) 
-        setMaximumNumber(9)
-        setFirstNumber(Math.floor(Math.random() * (9 - 0 + 1)) + 0)
-        setSecondNumber(Math.floor(Math.random() * (9 - 0 + 1)) + 0)
-        break
-      case '2':
-        setMinimumNumber(10)
-        setMaximumNumber(99)
-        setFirstNumber(Math.floor(Math.random() * (99 - 10 + 1)) + 0)
-        setSecondNumber(Math.floor(Math.random() * (99 - 10 + 1)) + 0)
-        break
-      case '3':
-        setMinimumNumber(100)
-        setMaximumNumber(999)
-        setFirstNumber(Math.floor(Math.random() * (999 - 100 + 1)) + 0)
-        setSecondNumber(Math.floor(Math.random() * (999 - 100 + 1)) + 0)
-      break
-      case '4':
-        setMinimumNumber(1000)
-        setMaximumNumber(9999)
-        setFirstNumber(Math.floor(Math.random() * (9999 - 1000 + 1)) + 0)
-        setSecondNumber(Math.floor(Math.random() * (9999 - 1000 + 1)) + 0)
-      break
-      default:
-        console.log('default case')
-        break
+    if (mathOperator !== '%') {
+      setNumberOfDigits(event.target.value)
+      switch (event.target.value) {
+        case '1':
+          setMinimumNumber(0)
+          setMaximumNumber(9)
+          setFirstNumber(Math.floor(Math.random() * (9 - 0 + 1)) + 0)
+          setSecondNumber(Math.floor(Math.random() * (9 - 0 + 1)) + 0)
+          break
+        case '2':
+          setMinimumNumber(10)
+          setMaximumNumber(99)
+          setFirstNumber(Math.floor(Math.random() * (99 - 10 + 1)) + 0)
+          setSecondNumber(Math.floor(Math.random() * (99 - 10 + 1)) + 0)
+          break
+        case '3':
+          setMinimumNumber(100)
+          setMaximumNumber(999)
+          setFirstNumber(Math.floor(Math.random() * (999 - 100 + 1)) + 0)
+          setSecondNumber(Math.floor(Math.random() * (999 - 100 + 1)) + 0)
+          break
+        case '4':
+          setMinimumNumber(1000)
+          setMaximumNumber(9999)
+          setFirstNumber(Math.floor(Math.random() * (9999 - 1000 + 1)) + 0)
+          setSecondNumber(Math.floor(Math.random() * (9999 - 1000 + 1)) + 0)
+          break
+        default:
+          console.log('default case')
+          break
+      }
     }
   }
 
@@ -278,9 +308,20 @@ function Counter() {
     setResults(true)
   }
 
-  let handleOperationChange = e => {
-    setMathOperator(e.target.value)
-    setChoicesForOperations(firstNumber, secondNumber, e.target.value)
+  let handleOperationChange = event => {
+    setMathOperator(event.target.value)
+    let divisor = generateDivisibleNumbers()
+    console.log(divisor)
+    // let divisor_one = 1 + Math.round(Math.random() % maximumNumber * 2)
+    // let result = 1 + Math.round(Math.random() % maximumNumber * 2)
+    // let divisor_two = divisor_one * result    
+    if (event.target.value === '%') {
+      setFirstNumber(divisor[0])
+      setSecondNumber(divisor[1])
+      setChoicesForOperations(divisor[0], divisor[1], event.target.value)     
+    }
+    else 
+      setChoicesForOperations(firstNumber, secondNumber, event.target.value)    
   }
 
   let handleSubmitCounting = event => { 
@@ -307,8 +348,9 @@ function Counter() {
     { "y": state.questionCountCounting, "x": "Count" },
     { "y": state.questionCountAddition, "x": "Add" },
     { "y": state.questionCountSubtraction, "x": "Subtract" },
-    { "y": state.questionCountMultiplication, "x": "Multiply" }
-]
+    { "y": state.questionCountMultiplication, "x": "Multiply" },
+    { "y": state.questionCountDivision, "x": "Division" }
+  ]
 
   return (<MuiThemeProvider theme={theme}>
   <AppBar position="static">
@@ -354,6 +396,7 @@ function Counter() {
             <option value="+">Addition (+)</option>
             <option value="-">Subtraction (-)</option>
             <option value="*">Multiplication (*)</option>
+            <option value="%">Division (%)</option>
           </Select>
       </FormControl>
 
