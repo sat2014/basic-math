@@ -84,7 +84,6 @@ function Counter() {
     let divisor_two = divisor_one * result 
     let divisor = []
     divisor.push(divisor_two, divisor_one)
-    console.log(divisor)
     return divisor
   }
 
@@ -173,13 +172,11 @@ function Counter() {
       if (parseInt(event.target.value) === parseInt((firstNumber / secondNumber))) {
         setDisplayMessage('Correct!')
         setSnackbarOpen(true)
-        let divisor_one = 1 + Math.round(Math.random() % maximumNumber * 2)
-        let result = 1 + Math.round(Math.random() % maximumNumber * 2)
-        let divisor_two = divisor_one * result       
-        setFirstNumber(divisor_two)
-        setSecondNumber(divisor_one)
+        let divisor = generateDivisibleNumbers()    
+        setFirstNumber(divisor[0])
+        setSecondNumber(divisor[1])
         dispatch({ type: 'incrementQuestionCountDivision' })
-        setChoicesForOperations(divisor_two, divisor_one, '%')
+        setChoicesForOperations(divisor[0], divisor[1], '%')
       }
       else {
         setDisplayMessage('Oops, try again!')
@@ -311,7 +308,6 @@ function Counter() {
   let handleOperationChange = event => {
     setMathOperator(event.target.value)
     let divisor = generateDivisibleNumbers()
-    console.log(divisor)
     // let divisor_one = 1 + Math.round(Math.random() % maximumNumber * 2)
     // let result = 1 + Math.round(Math.random() % maximumNumber * 2)
     // let divisor_two = divisor_one * result    
