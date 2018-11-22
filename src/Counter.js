@@ -36,6 +36,9 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import BarChartIcon from '@material-ui/icons/BarChart'
 import ExposureIcon from '@material-ui/icons/Exposure'
 import PanToolIcon from '@material-ui/icons/PanTool'
+import SettingsIcon from '@material-ui/icons/Settings'
+import Switch from '@material-ui/core/Switch'
+import FormGroup from '@material-ui/core/FormGroup'
 
 function Counter() {
   let [results, setResults] = useState(false)
@@ -84,6 +87,8 @@ function Counter() {
 
   // let [anchorEl, setAnchorEL] = useState(null)
   let [openDrawer, setOpenDrawer] = useState(false)
+  let [settings, setSettings] = useState(false)
+  let [switchForLocalStorage, setSwitchForLocalStorage] = useState(false)
 
   let handleClearLocalStorage = () => {
     localStorage.clear()
@@ -331,6 +336,7 @@ function Counter() {
     setCounting(false)
     setWelcome(false)
     setResults(false)
+    setSettings(false)
     setOperations(true)
     setChoicesForOperations(firstNumber, secondNumber, mathOperator)
   }
@@ -340,7 +346,17 @@ function Counter() {
     setCounting(false)
     setWelcome(false)  
     setOperations(false)
+    setSettings(false)
     setResults(true)
+  }
+
+  let handleSettings = events => {
+    setOpenDrawer(false)
+    setCounting(false)
+    setWelcome(false)  
+    setOperations(false)
+    setResults(false)
+    setSettings(true)
   }
 
   let handleOperationChange = event => {
@@ -380,6 +396,10 @@ function Counter() {
     setOpenDrawer(false)
   }
 
+  let handleChangeSwitchForLocalStorage = event => {
+    setSwitchForLocalStorage(!switchForLocalStorage)
+  };
+
   return (<MuiThemeProvider theme={theme}>
   <AppBar position="static">
     <Toolbar disableGutters={openDrawer}>
@@ -417,6 +437,10 @@ function Counter() {
         <ListItem button key='results' onClick={()=>handleResults()}>
           <BarChartIcon /> 
           <ListItemText primary='Results' />
+        </ListItem>
+        <ListItem button key='settings' onClick={()=>handleSettings()}>
+          <SettingsIcon /> 
+          <ListItemText primary='Settings' />
         </ListItem>
     </List>
   </Drawer>      
@@ -573,6 +597,34 @@ function Counter() {
         Delete Results 
         <DeleteIcon className={JSON.stringify(styles.rightIcon)} />
       </Button>   
+    </center>  
+  }
+  {
+    settings &&  
+    <center>
+      {/* <Typography variant="h6" color="inherit" className={JSON.stringify(styles.grow)}>
+        Store results locally
+      </Typography>   */}
+      <FormGroup row>     
+        <FormControlLabel className={JSON.stringify(styles.grow)}
+          label=" Store results locally"
+          control={
+            <Switch
+              classes={{
+                switchBase: JSON.stringify(styles.iOSSwitchBase),
+                bar: JSON.stringify(styles.iOSBar),
+                icon: JSON.stringify(styles.iOSIcon),
+                iconChecked: JSON.stringify(styles.iOSIconChecked),
+                checked: JSON.stringify(styles.iOSChecked),
+              }}
+              disableRipple
+              checked={switchForLocalStorage}
+              onChange={handleChangeSwitchForLocalStorage}
+              value="checkedSwitchForLocalStorage"
+            />
+          }          
+        />
+      </FormGroup>
     </center>  
   }
   </div>
