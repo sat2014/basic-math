@@ -22,6 +22,8 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import shuffle from './utilities/shuffle'
 
+import useLocalStorage from './customHooks/useLocalStorage';
+
 function Counter() {
   let [results, setResults] = useState(false)
   let [welcome, setWelcome] = useState(true)
@@ -67,6 +69,8 @@ function Counter() {
   let [choice3, setChoice3] = useState(3)
   let [choice4, setChoice4] = useState(4)
 
+  //localStorage.clear()
+  
   const [state, dispatch] = useReducer(reducer, initialState);
 
   let [randomIcon, setRandomIcon] = useState(Math.floor(Math.random() * shapes.length) + 1)
@@ -78,6 +82,14 @@ function Counter() {
     />
   )
 
+  let barChartData = [
+    { "y": state.questionCountCounting, "x": "Count" },
+    { "y":  state.questionCountAddition, "x": "Add" },
+    { "y":  state.questionCountSubtraction,  "x": "Subtract" },
+    { "y":  state.questionCountMultiplication, "x": "Multiply" },
+    { "y":  state.questionCountDivision, "x": "Division" }
+  ]
+
   let generateDivisibleNumbers = () => {
     let divisor_one = 1 + Math.round(Math.random() % maximumNumber * 2)
     let result = 1 + Math.round(Math.random() % maximumNumber * 2)
@@ -86,6 +98,12 @@ function Counter() {
     divisor.push(divisor_two, divisor_one)
     return divisor
   }
+  
+  useLocalStorage('questionCountCounting', state.questionCountCounting)
+  useLocalStorage('questionCountAddition', state.questionCountAddition)
+  useLocalStorage('questionCountSubtraction', state.questionCountSubtraction)
+  useLocalStorage('questionCountMultiplication', state.questionCountMultiplication)
+  useLocalStorage('questionCountDivision', state.questionCountDivision)
 
   useDocumentTitle(`Baic Math: ${state.questionCountCounting + state.questionCountAddition + state.questionCountSubtraction + state.questionCountMultiplication + state.questionCountDivision}`)
 
@@ -303,14 +321,17 @@ function Counter() {
     setWelcome(false)  
     setOperations(false)
     setResults(true)
+    
+    console.log(localStorage.getItem('questionCountCounting'))
+    console.log(localStorage.getItem('questionCountAddition'))
+    console.log(localStorage.getItem('questionCountSubtraction'))
+    console.log(localStorage.getItem('questionCountMultiplication'))
+    console.log(localStorage.getItem('questionCountDivision'))
   }
 
   let handleOperationChange = event => {
     setMathOperator(event.target.value)
-    let divisor = generateDivisibleNumbers()
-    // let divisor_one = 1 + Math.round(Math.random() % maximumNumber * 2)
-    // let result = 1 + Math.round(Math.random() % maximumNumber * 2)
-    // let divisor_two = divisor_one * result    
+    let divisor = generateDivisibleNumbers()  
     if (event.target.value === '%') {
       setFirstNumber(divisor[0])
       setSecondNumber(divisor[1])
@@ -339,14 +360,6 @@ function Counter() {
       // setTotal('')
     }      
   }
-
-  let barChartData = [
-    { "y": state.questionCountCounting, "x": "Count" },
-    { "y": state.questionCountAddition, "x": "Add" },
-    { "y": state.questionCountSubtraction, "x": "Subtract" },
-    { "y": state.questionCountMultiplication, "x": "Multiply" },
-    { "y": state.questionCountDivision, "x": "Division" }
-  ]
 
   return (<MuiThemeProvider theme={theme}>
   <AppBar position="static">

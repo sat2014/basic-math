@@ -3,7 +3,7 @@ import initialStateCount from './initialState/initialStateCount';
 function reducerCount(state, action) {
     switch (action.type) {
       case 'reset':
-        return initialStateCount;
+        return initialStateCount;      
       case 'incrementQuestionCount':
         return {
           ...state,
