@@ -1,11 +1,50 @@
 import React from 'react';
 import {
     AccessAlarm, Android, Watch, Headset, Flight, Mood, Star, Train, Tram, Traffic, DirectionsBike, Speaker, Cloud, ThumbUp, Rowing, Pets, PanTool, Face,
-    DonutSmall, Home, Https, Settings, TouchApp, Update, AttachFile, FlashOn, WbSunny, WbIncandescent, LocalGasStation
+    DonutSmall, Home, Https, Settings, TouchApp, Update, AttachFile, FlashOn, WbSunny, WbIncandescent, LocalGasStation,
+    Motorcycle, ShoppingCart, StarRate, Work, ZoomIn, ZoomOut, Album, PlayCircleOutline, Videocam, Call, Email, MailOutline,
+    ImportContacts, MobileScreenShare, StayCurrentPortrait, StayPrimaryLandscape, VpnKey, Drafts, Flag, RemoveCircle,
+    RemoveCircleOutline, Report, Send, Weekend, AirplanemodeActive, BatteryChargingFull, Nfc, ScreenLockLandscape,
+    ScreenRotation, SdStorage, SignalCellularNull, Usb, Wallpaper, WifiTethering, Waves
 } from '@material-ui/icons'
 import styles from '.';
 
 const shapes = [
+    <SignalCellularNull className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <Usb className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <Wallpaper className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <WifiTethering className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <Waves className={JSON.stringify(styles.icon)} color="primary" size="large" />,
+    <Flag className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <RemoveCircle className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <RemoveCircleOutline className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <Report className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <Send className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <Weekend className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <AirplanemodeActive className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <Nfc className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <ScreenLockLandscape className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <BatteryChargingFull className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <ScreenRotation className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <SdStorage className={JSON.stringify(styles.icon)} color="primary" size="large" />,
+    <Motorcycle className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <ShoppingCart className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <StarRate className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <Work className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <ZoomIn className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <ZoomOut className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <Album className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <PlayCircleOutline className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <Videocam className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <Call className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <Email className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <MailOutline className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <ImportContacts className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <MobileScreenShare className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <StayCurrentPortrait className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <StayPrimaryLandscape className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <VpnKey className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
+    <Drafts className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
     <AccessAlarm className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
     <Android className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
     <Watch className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
@@ -35,7 +74,7 @@ const shapes = [
     <Tram className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
     <WbSunny className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
     <WbIncandescent className={JSON.stringify(styles.icon)} color="primary" size="large"/>,
-    <LocalGasStation className={JSON.stringify(styles.icon)} color="primary" size="large"/>
+    <LocalGasStation className={JSON.stringify(styles.icon)} color="primary" size="large" />  
 ]
 
 export default shapes

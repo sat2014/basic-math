@@ -24,6 +24,10 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import shuffle from './utilities/shuffle'
 import useLocalStorage from './customHooks/useLocalStorage';
 import generateDivisibleNumbers from './utilities/generateDivisibleNumbers';
+// import IconButton from '@material-ui/core/IconButton';
+// import MenuItem from '@material-ui/core/MenuItem';
+// import Menu from '@material-ui/core/Menu';
+// import Settings from '@material-ui/icons/Settings';
 
 function Counter() {
   let [results, setResults] = useState(false)
@@ -69,6 +73,8 @@ function Counter() {
   let [choice2, setChoice2] = useState(2)
   let [choice3, setChoice3] = useState(3)
   let [choice4, setChoice4] = useState(4)
+
+  // let [anchorEl, setAnchorEL] = useState(null)
 
   let handleClearLocalStorage = () => {
     localStorage.clear()
@@ -354,12 +360,45 @@ function Counter() {
     }      
   }
 
+  // let handleMenu = event => {
+  //   setAnchorEL(event.currentTarget)
+  // }
+
+  // let handleClose = () => {
+  //   setAnchorEL(null)
+  // };
+
   return (<MuiThemeProvider theme={theme}>
   <AppBar position="static">
     <Toolbar>         
         <Button color="inherit" onClick={()=>handleCounting()}>Counting</Button>
         <Button color="inherit" onClick={() => handleOperations()}>Operations</Button>   
-        <Button color="inherit" onClick={()=>handleResults()}>Results</Button>   
+        <Button color="inherit" onClick={() => handleResults()}>Results</Button>   
+        {/* <IconButton
+              aria-owns={Boolean(anchorEl) ? 'menu-appbar' : undefined}
+              aria-haspopup="true"
+              onClick={handleMenu}
+              color="inherit"
+            >
+            <Settings />
+          </IconButton>
+          <Menu
+            id="menu-appbar"
+            anchorEl={anchorEl}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleClose}>Profile</MenuItem>
+            <MenuItem onClick={handleClose}>My account</MenuItem>
+          </Menu> */}
     </Toolbar>
   </AppBar>
   <div className={styles.root}>
