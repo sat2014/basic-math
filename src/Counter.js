@@ -322,7 +322,8 @@ function Counter() {
     setSelectedValue(1)
   }
 
-  let handleCounting = event => {    
+  let handleCounting = event => {  
+    setSettings(false)
     setOpenDrawer(false)
     setOperations(false)
     setWelcome(false)
@@ -332,6 +333,7 @@ function Counter() {
   }
 
   let handleOperations = event => { 
+    setSettings(false)
     setOpenDrawer(false)
     setCounting(false)
     setWelcome(false)
@@ -342,6 +344,7 @@ function Counter() {
   }
 
   let handleResults = events => {
+    setSettings(false)
     setOpenDrawer(false)
     setCounting(false)
     setWelcome(false)  
