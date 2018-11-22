@@ -1,33 +1,41 @@
 import React, { useState, useReducer } from 'react'
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import Button from '@material-ui/core/Button';
-import Snackbar from '@material-ui/core/Snackbar';
-import { MuiThemeProvider } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import useDocumentTitle from './customHooks/useDocumentTitle';
-import styles from './style';
+import FormControl from '@material-ui/core/FormControl'
+import InputLabel from '@material-ui/core/InputLabel'
+import Select from '@material-ui/core/Select'
+import Button from '@material-ui/core/Button'
+import Snackbar from '@material-ui/core/Snackbar'
+import { MuiThemeProvider } from '@material-ui/core/styles'
+import Paper from '@material-ui/core/Paper'
+import Typography from '@material-ui/core/Typography'
+import useDocumentTitle from './customHooks/useDocumentTitle'
+import styles from './style'
 import theme from './style/theme'
-import reducer from './reducers/reducerCount';
-import initialState from './reducers/initialState/initialStateCount';
-import Fade from '@material-ui/core/Fade';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import DeleteIcon from '@material-ui/icons/Delete';
-import shapes from './style/shapes';
+import reducer from './reducers/reducerCount'
+import initialState from './reducers/initialState/initialStateCount'
+import Fade from '@material-ui/core/Fade'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import DeleteIcon from '@material-ui/icons/Delete'
+import shapes from './style/shapes'
 import BarChart from './BarChart'
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
+import Radio from '@material-ui/core/Radio'
+import RadioGroup from '@material-ui/core/RadioGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import shuffle from './utilities/shuffle'
-import useLocalStorage from './customHooks/useLocalStorage';
-import generateDivisibleNumbers from './utilities/generateDivisibleNumbers';
-// import IconButton from '@material-ui/core/IconButton';
-// import MenuItem from '@material-ui/core/MenuItem';
-// import Menu from '@material-ui/core/Menu';
-// import Settings from '@material-ui/icons/Settings';
+import useLocalStorage from './customHooks/useLocalStorage'
+import generateDivisibleNumbers from './utilities/generateDivisibleNumbers'
+import IconButton from '@material-ui/core/IconButton'
+import MenuIcon from '@material-ui/icons/Menu'
+import Drawer from '@material-ui/core/Drawer'
+import Divider from '@material-ui/core/Divider'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import List from '@material-ui/core/List'
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
+import ChevronRightIcon from '@material-ui/icons/ChevronRight'
+import BarChartIcon from '@material-ui/icons/BarChart'
+import ExposureIcon from '@material-ui/icons/Exposure'
+import PanToolIcon from '@material-ui/icons/PanTool'
 
 function Counter() {
   let [results, setResults] = useState(false)
@@ -75,6 +83,7 @@ function Counter() {
   let [choice4, setChoice4] = useState(4)
 
   // let [anchorEl, setAnchorEL] = useState(null)
+  let [openDrawer, setOpenDrawer] = useState(false)
 
   let handleClearLocalStorage = () => {
     localStorage.clear()
@@ -309,6 +318,7 @@ function Counter() {
   }
 
   let handleCounting = event => {    
+    setOpenDrawer(false)
     setOperations(false)
     setWelcome(false)
     setResults(false)
@@ -317,6 +327,7 @@ function Counter() {
   }
 
   let handleOperations = event => { 
+    setOpenDrawer(false)
     setCounting(false)
     setWelcome(false)
     setResults(false)
@@ -325,6 +336,7 @@ function Counter() {
   }
 
   let handleResults = events => {
+    setOpenDrawer(false)
     setCounting(false)
     setWelcome(false)  
     setOperations(false)
@@ -360,47 +372,54 @@ function Counter() {
     }      
   }
 
-  // let handleMenu = event => {
-  //   setAnchorEL(event.currentTarget)
-  // }
+  let handleDrawerOpen = () => {
+    setOpenDrawer(true)
+  }
 
-  // let handleClose = () => {
-  //   setAnchorEL(null)
-  // };
+  let handleDrawerClose = () => {
+    setOpenDrawer(false)
+  }
 
   return (<MuiThemeProvider theme={theme}>
   <AppBar position="static">
-    <Toolbar>         
-        <Button color="inherit" onClick={()=>handleCounting()}>Counting</Button>
-        <Button color="inherit" onClick={() => handleOperations()}>Operations</Button>   
-        <Button color="inherit" onClick={() => handleResults()}>Results</Button>   
-        {/* <IconButton
-              aria-owns={Boolean(anchorEl) ? 'menu-appbar' : undefined}
-              aria-haspopup="true"
-              onClick={handleMenu}
-              color="inherit"
-            >
-            <Settings />
-          </IconButton>
-          <Menu
-            id="menu-appbar"
-            anchorEl={anchorEl}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>My account</MenuItem>
-          </Menu> */}
+    <Toolbar disableGutters={openDrawer}>
+        <IconButton
+          color="inherit"
+          aria-label="Open drawer"
+          onClick={handleDrawerOpen}         
+        >
+          <MenuIcon />
+        </IconButton>
+        <Typography variant="h6" color="inherit" noWrap>
+          Basic Math
+        </Typography>
     </Toolbar>
   </AppBar>
+  <Drawer
+      variant="temporary"
+      open={openDrawer}
+  >
+    <div className={styles.toolbar}>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            </IconButton>
+          </div>
+          <Divider />
+      <List>
+        <ListItem button key='counting' onClick={()=>handleCounting()}>
+          <PanToolIcon /> 
+          <ListItemText primary='Counting' />
+        </ListItem>
+        <ListItem button key='operations' onClick={()=>handleOperations()}>
+          <ExposureIcon /> 
+          <ListItemText primary='Operations' />
+          </ListItem>
+        <ListItem button key='results' onClick={()=>handleResults()}>
+          <BarChartIcon /> 
+          <ListItemText primary='Results' />
+        </ListItem>
+    </List>
+  </Drawer>      
   <div className={styles.root}>
   <br />
   <Snackbar
@@ -416,7 +435,7 @@ function Counter() {
     welcome && 
       <center>
         <Typography variant="h6" color="inherit" className={JSON.stringify(styles.grow)}>
-          Welcome to Basic Math training
+          Welcome to Basic Math training!
         </Typography>  
       </center>    
   }
