@@ -10,12 +10,13 @@ import {
 class BarChart extends React.Component {
     render() {
         const data = this.props.data;
-        let chartDomainMax = Math.max(
-            data[0].y !== null ? parseInt(data[0].y) : 0, 
-            data[1].y !== null ? parseInt(data[1].y) : 0,
-            data[2].y !== null ? parseInt(data[2].y) : 0,
-            data[3].y !== null ? parseInt(data[3].y) : 0
-            )
+        let chartDomainMax = 500
+            // Math.max(
+            // data[0].y,
+            // data[1].y,
+            // data[2].y,
+            // data[3].y
+            // )
         const chartWidth = 400;
         const chartHeight = 500;
         const chartDomain = [0, chartDomainMax > 0 ? chartDomainMax+10 : 10];

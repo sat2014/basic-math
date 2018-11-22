@@ -22,8 +22,8 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import shuffle from './utilities/shuffle'
-
 import useLocalStorage from './customHooks/useLocalStorage';
+import generateDivisibleNumbers from './utilities/generateDivisibleNumbers';
 
 function Counter() {
   let [results, setResults] = useState(false)
@@ -93,15 +93,6 @@ function Counter() {
     { "y":  state.questionCountMultiplication, "x": "Multiply" },
     { "y":  state.questionCountDivision, "x": "Division" }
   ]
-
-  let generateDivisibleNumbers = () => {
-    let divisor_one = 1 + Math.round(Math.random() % maximumNumber * 2)
-    let result = 1 + Math.round(Math.random() % maximumNumber * 2)
-    let divisor_two = divisor_one * result 
-    let divisor = []
-    divisor.push(divisor_two, divisor_one)
-    return divisor
-  }
   
   useLocalStorage('questionCountCounting', state.questionCountCounting)
   useLocalStorage('questionCountAddition', state.questionCountAddition)
@@ -194,11 +185,8 @@ function Counter() {
       if (parseInt(event.target.value) === parseInt((firstNumber / secondNumber))) {
         setDisplayMessage('Correct!')
         setSnackbarOpen(true)
-        let divisor = generateDivisibleNumbers()    
-        setFirstNumber(divisor[0])
-        setSecondNumber(divisor[1])
+        numberOfDigits === 1 ? setNumbersForDivisionAndChoices(9) : setNumbersForDivisionAndChoices(99)
         dispatch({ type: 'incrementQuestionCountDivision' })
-        setChoicesForOperations(divisor[0], divisor[1], '%')
       }
       else {
         setDisplayMessage('Oops, try again!')
@@ -210,40 +198,50 @@ function Counter() {
     }
   }
 
+  let setNumbersForDivisionAndChoices = (maxNumber) => {
+    let divisor = generateDivisibleNumbers(maxNumber)    
+    setFirstNumber(divisor[0])
+    setSecondNumber(divisor[1])
+    setChoicesForOperations(divisor[0], divisor[1], '%')
+  }
 
   let handleChangeNumberOfDigits = props => event => {
-    if (mathOperator !== '%') {
       setNumberOfDigits(event.target.value)
       switch (event.target.value) {
         case '1':
           setMinimumNumber(0)
-          setMaximumNumber(9)
-          setFirstNumber(Math.floor(Math.random() * (9 - 0 + 1)) + 0)
-          setSecondNumber(Math.floor(Math.random() * (9 - 0 + 1)) + 0)
+          setMaximumNumber(9)  
+          if (mathOperator === '%') {
+            setNumbersForDivisionAndChoices(9)
+          }
+          else
+          {
+            let fNumber = Math.floor(Math.random() * (9 - 0 + 1)) + 0
+            let sNumber = Math.floor(Math.random() * (9 - 0 + 1)) + 0
+            setFirstNumber(fNumber)
+            setSecondNumber(sNumber)
+            setChoicesForOperations(fNumber, sNumber, mathOperator)
+          }
           break
         case '2':
           setMinimumNumber(10)
           setMaximumNumber(99)
-          setFirstNumber(Math.floor(Math.random() * (99 - 10 + 1)) + 0)
-          setSecondNumber(Math.floor(Math.random() * (99 - 10 + 1)) + 0)
-          break
-        case '3':
-          setMinimumNumber(100)
-          setMaximumNumber(999)
-          setFirstNumber(Math.floor(Math.random() * (999 - 100 + 1)) + 0)
-          setSecondNumber(Math.floor(Math.random() * (999 - 100 + 1)) + 0)
-          break
-        case '4':
-          setMinimumNumber(1000)
-          setMaximumNumber(9999)
-          setFirstNumber(Math.floor(Math.random() * (9999 - 1000 + 1)) + 0)
-          setSecondNumber(Math.floor(Math.random() * (9999 - 1000 + 1)) + 0)
+          if (mathOperator === '%') {
+            setNumbersForDivisionAndChoices(99)
+          }
+          else
+          {
+            let fNumber = Math.floor(Math.random() * (99 - 10 + 1)) + 0
+            let sNumber = Math.floor(Math.random() * (99 - 10 + 1)) + 0
+            setFirstNumber(fNumber)
+            setSecondNumber(sNumber)
+            setChoicesForOperations(fNumber, sNumber, mathOperator)
+          }
           break
         default:
           console.log('default case')
           break
       }
-    }
   }
 
   let setRandomValues = () => {
@@ -329,11 +327,8 @@ function Counter() {
 
   let handleOperationChange = event => {
     setMathOperator(event.target.value)
-    let divisor = generateDivisibleNumbers()  
     if (event.target.value === '%') {
-      setFirstNumber(divisor[0])
-      setSecondNumber(divisor[1])
-      setChoicesForOperations(divisor[0], divisor[1], event.target.value)     
+      numberOfDigits === 1 ? setNumbersForDivisionAndChoices(9) : setNumbersForDivisionAndChoices (99)    
     }
     else 
       setChoicesForOperations(firstNumber, secondNumber, event.target.value)    
