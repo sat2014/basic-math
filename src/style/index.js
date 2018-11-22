@@ -54,6 +54,9 @@ const styles = theme => ({
     width: 60,
     height: 60,
   },
+  rightIcon: {
+    marginLeft: theme.spacing.unit,
+  },
 });
   
 export default styles(theme)

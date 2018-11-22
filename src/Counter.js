@@ -15,6 +15,7 @@ import initialState from './reducers/initialState/initialStateCount';
 import Fade from '@material-ui/core/Fade';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import DeleteIcon from '@material-ui/icons/Delete';
 import shapes from './style/shapes';
 import BarChart from './BarChart'
 import Radio from '@material-ui/core/Radio';
@@ -69,7 +70,10 @@ function Counter() {
   let [choice3, setChoice3] = useState(3)
   let [choice4, setChoice4] = useState(4)
 
-  //localStorage.clear()
+  let handleClearLocalStorage = () => {
+    localStorage.clear()
+    dispatch({ type: 'reset' })
+  }
   
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -321,12 +325,6 @@ function Counter() {
     setWelcome(false)  
     setOperations(false)
     setResults(true)
-    
-    console.log(localStorage.getItem('questionCountCounting'))
-    console.log(localStorage.getItem('questionCountAddition'))
-    console.log(localStorage.getItem('questionCountSubtraction'))
-    console.log(localStorage.getItem('questionCountMultiplication'))
-    console.log(localStorage.getItem('questionCountDivision'))
   }
 
   let handleOperationChange = event => {
@@ -516,6 +514,12 @@ function Counter() {
     results &&  
     <center>
       <BarChart data={barChartData} />
+      <br />
+      <br />
+      <Button color="secondary" variant="contained" onClick={()=>handleClearLocalStorage()}> 
+        Delete Results 
+        <DeleteIcon className={JSON.stringify(styles.rightIcon)} />
+      </Button>   
     </center>  
   }
   </div>

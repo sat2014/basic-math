@@ -1,9 +1,14 @@
-import initialStateCount from './initialState/initialStateCount';
-  
 function reducerCount(state, action) {
     switch (action.type) {
       case 'reset':
-        return initialStateCount;      
+        return {         
+          questionCount: 0,
+          questionCountAddition: 0,
+          questionCountSubtraction: 0,
+          questionCountMultiplication: 0,
+          questionCountDivision: 0,
+          questionCountCounting: 0,
+        }    
       case 'incrementQuestionCount':
         return {
           ...state,
@@ -43,4 +48,4 @@ function reducerCount(state, action) {
     }
   }
 
-  export default reducerCount
+ export default reducerCount
