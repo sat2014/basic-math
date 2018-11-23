@@ -2,7 +2,6 @@ import React, { useState, useReducer } from 'react'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import Select from '@material-ui/core/Select'
-import Button from '@material-ui/core/Button'
 import Snackbar from '@material-ui/core/Snackbar'
 import { MuiThemeProvider } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
@@ -15,7 +14,6 @@ import initialState from './reducers/initialState/initialStateCount'
 import Fade from '@material-ui/core/Fade'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
-import DeleteIcon from '@material-ui/icons/Delete'
 import shapes from './style/shapes'
 import BarChart from './BarChart'
 import Radio from '@material-ui/core/Radio'
@@ -88,11 +86,15 @@ function Counter() {
   // let [anchorEl, setAnchorEL] = useState(null)
   let [openDrawer, setOpenDrawer] = useState(false)
   let [settings, setSettings] = useState(false)
-  let [switchForLocalStorage, setSwitchForLocalStorage] = useState(false)
+  //let [switchForLocalStorage, setSwitchForLocalStorage] = useState(false)
 
   let handleClearLocalStorage = () => {
     localStorage.clear()
     dispatch({ type: 'reset' })
+  }
+
+  let handleSetLocalStorage = () => {
+    localStorage.setItem('localStorageFlag', true)//JSON.stringify(true))
   }
   
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -114,11 +116,14 @@ function Counter() {
     { "y":  state.questionCountDivision, "x": "Division" }
   ]
   
-  useLocalStorage('questionCountCounting', state.questionCountCounting)
-  useLocalStorage('questionCountAddition', state.questionCountAddition)
-  useLocalStorage('questionCountSubtraction', state.questionCountSubtraction)
-  useLocalStorage('questionCountMultiplication', state.questionCountMultiplication)
-  useLocalStorage('questionCountDivision', state.questionCountDivision)
+  // console.log(state.localStorageFlag)
+  // console.log(localStorage.getItem('localStorageFlag'))
+
+  useLocalStorage('questionCountCounting', state.questionCountCounting, state.localStorageFlag)
+  useLocalStorage('questionCountAddition', state.questionCountAddition, state.localStorageFlag)
+  useLocalStorage('questionCountSubtraction', state.questionCountSubtraction, state.localStorageFlag)
+  useLocalStorage('questionCountMultiplication', state.questionCountMultiplication, state.localStorageFlag)
+  useLocalStorage('questionCountDivision', state.questionCountDivision, state.localStorageFlag)
 
   useDocumentTitle(`Baic Math: ${state.questionCountCounting + state.questionCountAddition + state.questionCountSubtraction + state.questionCountMultiplication + state.questionCountDivision}`)
 
@@ -400,7 +405,15 @@ function Counter() {
   }
 
   let handleChangeSwitchForLocalStorage = event => {
-    setSwitchForLocalStorage(!switchForLocalStorage)
+    if (state.localStorageFlag) {
+      dispatch({ type: 'resetLocalStorageFlag' })      
+      handleClearLocalStorage()
+    }
+    else{
+      dispatch({ type: 'resetLocalStorageFlag' })   
+      handleSetLocalStorage()
+    }
+    // setSwitchForLocalStorage(!switchForLocalStorage)
   };
 
   return (<MuiThemeProvider theme={theme}>
@@ -594,12 +607,12 @@ function Counter() {
     results &&  
     <center>
       <BarChart data={barChartData} />
-      <br />
+      {/* <br />
       <br />
       <Button color="secondary" variant="contained" onClick={()=>handleClearLocalStorage()}> 
         Delete Results 
         <DeleteIcon className={JSON.stringify(styles.rightIcon)} />
-      </Button>   
+      </Button>    */}
     </center>  
   }
   {
@@ -621,7 +634,7 @@ function Counter() {
                 checked: JSON.stringify(styles.iOSChecked),
               }}
               disableRipple
-              checked={switchForLocalStorage}
+              checked={Boolean(state.localStorageFlag)}
               onChange={handleChangeSwitchForLocalStorage}
               value="checkedSwitchForLocalStorage"
             />

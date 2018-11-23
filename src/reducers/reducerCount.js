@@ -1,7 +1,13 @@
 function reducerCount(state, action) {
     switch (action.type) {
+      case 'resetLocalStorageFlag':
+      return {
+        ...state,
+        localStorageFlag: !state.localStorageFlag,
+      };
       case 'reset':
-        return {         
+        return {       
+          ...state,
           questionCount: 0,
           questionCountAddition: 0,
           questionCountSubtraction: 0,

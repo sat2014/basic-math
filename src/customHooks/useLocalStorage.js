@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 
-const useLocalStorage = (key, value)  => {
+const useLocalStorage = (key, value, flag)  => {
   useEffect(function persistResult() {
-    if (value !== 0)
+    if (flag && value !== 0)
       localStorage.setItem(key, JSON.stringify(value))
   })
 }
