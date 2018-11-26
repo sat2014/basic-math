@@ -15,7 +15,8 @@ import Fade from '@material-ui/core/Fade'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import shapes from './style/shapes'
-import BarChart from './BarChart'
+//import BarChart from './BarChart'
+//import BarChartNivo from './BarChart_Nivo'
 import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -37,6 +38,7 @@ import PanToolIcon from '@material-ui/icons/PanTool'
 import SettingsIcon from '@material-ui/icons/Settings'
 import Switch from '@material-ui/core/Switch'
 import FormGroup from '@material-ui/core/FormGroup'
+import { ResponsiveBar } from '@nivo/bar'
 
 function Counter() {
   let [results, setResults] = useState(false)
@@ -108,13 +110,55 @@ function Counter() {
     />
   )
 
-  let barChartData = [
-    { "y": state.questionCountCounting, "x": "Count" },
-    { "y":  state.questionCountAddition, "x": "Add" },
-    { "y":  state.questionCountSubtraction,  "x": "Subtract" },
-    { "y":  state.questionCountMultiplication, "x": "Multiply" },
-    { "y":  state.questionCountDivision, "x": "Division" }
+  // let barChartData = [
+  //   { "y": state.questionCountCounting, "x": "Count" },
+  //   { "y":  state.questionCountAddition, "x": "Add" },
+  //   { "y":  state.questionCountSubtraction,  "x": "Subtract" },
+  //   { "y":  state.questionCountMultiplication, "x": "Multiply" },
+  //   { "y":  state.questionCountDivision, "x": "Division" }
+  // ]
+
+  let barChartNivoData = [
+    { 
+      "name": "Total",
+      "Count": state.questionCountCounting,
+      "CountColor": "hsl(260, 70%, 50%)",
+      "Add": state.questionCountAddition ,
+      "AddColor": "hsl(57, 70%, 50%)",
+      "Sub": state.questionCountSubtraction  ,
+      "SubtractColor": "hsl(151, 70%, 50%)",
+      "Mul": state.questionCountMultiplication  ,
+      "MultiplyColor": "hsl(224, 70%, 50%)",
+      "Div": state.questionCountDivision, 
+      "DivisionColor": "hsl(271, 70%, 50%)"
+    },
+    { 
+      "name": "Count",
+      "Count": state.questionCountCounting,
+      "CountColor": "hsl(260, 70%, 50%)",        
+    },
+    { 
+      "name": "Add",        
+      "Add": state.questionCountAddition ,
+      "AddColor": "hsl(57, 70%, 50%)"        
+    },
+    { 
+      "name": "Sub",
+      "Sub": state.questionCountSubtraction  ,
+      "SubtractColor": "hsl(151, 70%, 50%)",
+    },
+    { 
+      "name": "Mul",
+      "Mul": state.questionCountMultiplication  ,
+      "MultiplyColor": "hsl(224, 70%, 50%)",
+    },
+    { 
+      "name": "Div",
+      "Div": state.questionCountDivision, 
+      "DivisionColor": "hsl(271, 70%, 50%)"
+    },
   ]
+
   
   // console.log(state.localStorageFlag)
   // console.log(localStorage.getItem('localStorageFlag'))
@@ -606,7 +650,78 @@ function Counter() {
   {
     results &&  
     <center>
-      <BarChart data={barChartData} />
+      {/* <BarChart data={barChartData} /> */}
+      <div style={{ height: 400 }}>
+        {/* <BarChartNivo data={barChartNivoData}/> */}
+        <ResponsiveBar
+        data={barChartNivoData}
+        keys={[
+            "Count",
+            "Add",
+            "Sub",
+            "Mul",
+            "Div"
+        ]}
+        indexBy="name"
+        margin={{
+            "top": 50,
+            "right": 130,
+            "bottom": 72,
+            "left": 60
+        }}
+        padding={0.3}
+        layout="horizontal"
+        colors="nivo"
+        colorBy="id"
+        borderColor="inherit:darker(1.6)"
+        axisBottom={{
+            "tickSize": 5,
+            "tickPadding": 5,
+            "tickRotation": 0,
+            "legend": "Number of Questions",
+            "legendPosition": "middle",
+            "legendOffset": 42
+        }}
+        axisLeft={{
+            "tickSize": 5,
+            "tickPadding": 5,
+            "tickRotation": 0,
+            "legend": "basic-math",
+            "legendPosition": "middle",
+            "legendOffset": -40
+        }}
+        labelSkipWidth={12}
+        labelSkipHeight={12}
+        labelTextColor="inherit:darker(1.6)"
+        animate={true}
+        motionStiffness={90}
+        motionDamping={15}
+        legends={[
+            {
+                "dataFrom": "keys",
+                "anchor": "bottom-right",
+                "direction": "column",
+                "justify": false,
+                "translateX": 120,
+                "translateY": 0,
+                "itemsSpacing": 2,
+                "itemWidth": 100,
+                "itemHeight": 20,
+                "itemDirection": "left-to-right",
+                "itemOpacity": 0.85,
+                "symbolSize": 20,
+                "effects": [
+                    {
+                        "on": "hover",
+                        "style": {
+                            "itemOpacity": 1
+                        }
+                    }
+                ]
+            }
+        ]}
+    />
+      </div>
       {/* <br />
       <br />
       <Button color="secondary" variant="contained" onClick={()=>handleClearLocalStorage()}> 
