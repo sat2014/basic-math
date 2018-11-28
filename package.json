@@ -12,6 +12,7 @@
     "react-dom": "^16.7.0-alpha",
     "react-scripts": "2.1.0",
     "react-vis": "^1.11.4",
+    "serve": "^10.1.1",
     "typeface-roboto": "0.0.54"
   },
   "scripts": {

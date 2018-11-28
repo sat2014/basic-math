@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     environment:
       - NODE_ENV=production
-    command: npm start
+    command: serve -l 80 -s build
     ports:
       - 80:80
     volumes:
