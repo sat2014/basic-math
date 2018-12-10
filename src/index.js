@@ -3,6 +3,21 @@ import ReactDOM from 'react-dom';
 import Counter from './Counter';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<Counter />, document.getElementById('root'));
+import { ContextOneProvider } from "./context";
+//import SimpleCard from './SimpleCard'
 
-serviceWorker.register();
+//ReactDOM.render(<Counter />, document.getElementById('root'));
+
+function main(target, container) {
+    ReactDOM.render(target, container);
+  }
+  
+  main(
+    <ContextOneProvider>
+      <Counter />
+      {/* <SimpleCard /> */}
+    </ContextOneProvider>,
+    document.getElementById("root")
+  )
+
+  serviceWorker.register();

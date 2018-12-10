@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react'
+import React, { useState } from 'react'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import Select from '@material-ui/core/Select'
@@ -9,14 +9,10 @@ import Typography from '@material-ui/core/Typography'
 import useDocumentTitle from './customHooks/useDocumentTitle'
 import styles from './style'
 import theme from './style/theme'
-import reducer from './reducers/reducerCount'
-import initialState from './reducers/initialState/initialStateCount'
 import Fade from '@material-ui/core/Fade'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import shapes from './style/shapes'
-//import BarChart from './BarChart'
-//import BarChartNivo from './BarChart_Nivo'
 import Radio from '@material-ui/core/Radio'
 import RadioGroup from '@material-ui/core/RadioGroup'
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -39,6 +35,9 @@ import SettingsIcon from '@material-ui/icons/Settings'
 import Switch from '@material-ui/core/Switch'
 import FormGroup from '@material-ui/core/FormGroup'
 import { ResponsiveBar } from '@nivo/bar'
+
+import { ContextOne } from "./context"
+import SimpleCard from './SimpleCard';
 
 function Counter() {
   let [results, setResults] = useState(false)
@@ -99,7 +98,8 @@ function Counter() {
     localStorage.setItem('localStorageFlag', true)//JSON.stringify(true))
   }
   
-  const [state, dispatch] = useReducer(reducer, initialState);
+  //const [state, dispatch] = useReducer(reducer, initialState);
+  let { state, dispatch } = React.useContext(ContextOne)
 
   let [randomIcon, setRandomIcon] = useState(Math.floor(Math.random() * shapes.length) + 1)
 
@@ -478,7 +478,8 @@ function Counter() {
   <Drawer
       variant="temporary"
       open={openDrawer}
-  >
+    >
+      
     <div className={styles.toolbar}>
             <IconButton onClick={handleDrawerClose}>
               {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -521,6 +522,7 @@ function Counter() {
         <Typography variant="h6" color="inherit" className={JSON.stringify(styles.grow)}>
           Welcome to Basic Math training!
         </Typography>  
+        <SimpleCard />
       </center>    
   }
   {operations && 
